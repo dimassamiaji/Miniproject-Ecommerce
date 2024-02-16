@@ -131,7 +131,7 @@ model Cart {
 model Point {
   id Int @id @default(autoincrement())
   userId Int
-  points Int      @default(0)
+  points Int @default(0)
   createdAt DateTime @default(now())
   expiredAt DateTime @default(now() + interval 3 month)
   user User @relation(fields: [userId], references: [id])
