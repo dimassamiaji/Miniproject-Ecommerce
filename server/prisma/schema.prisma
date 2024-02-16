@@ -6,6 +6,162 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+
+enum Gender {
+male
+female
+}
+
+enum Role {
+  customer
+  organizer
+}
+
+enum StockStatus { 
+  Available
+  Sold-Out
+}
+
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  role Role
+  gender Gender?
+  referralNumber String
+  referredBy String?
+  discountCoupon String?
+  discountExpiry DateTime @default(now())
+  phoneNumber String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  transactions Transaction[]
+  tickets Ticket []
+  categories Category[]
+  carts Cart[]
+}
+
+model Event {
+  id Int @id @default(autoincrement())
+  eventName String
+  description String
+  startDate DateTime @default(now())
+  endDate DateTime @default(now())
+  address string
+  availableSeats Int
+  isFree Boolean @default(false)
+  ticketTypes String?
+  tickets Ticket[]
+  reviews Review[]
+  location Location
+}
+
+model Location {
+  id Int @id @default(autoincrement())
+  Location_name string
+  events Event[]
+}
+
+model Ticket {
+  id Int @id @default(autoincrement())
+  eventId Int
+  price Float
+  Stock Int
+  orderDate DateTime
+  transactions Transaction[]
+  stock Stock[]
+  ticket_category Ticket_Category[]
+  carts Cart[]
+  event Event @relation(fields: [eventId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  category_name String
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ticket_category Ticket_Category[]
+}
+
+model Ticket_Category {
+  ticketId Int
+  categoryId Int
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  category  Category  @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  @@id([ticketId,categoryId])
+}
+
+model Stock {
+  id Int @id @default(autoincrement())
+  ticketId Int
+  stock_qty Decimal
+  status StockStatus?
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Transaction {
+  id Int @id @default(autoincrement())
+  userId Int
+  addressId Int
+  ticketId Int
+  totalTicket Int
+  totalPrice Float
+  buyingMethod String
+  transactionDate DateTime
+  user User @relation(fields: [userId], references: [id])
+  ticket Ticket @relation(fields: [tiketId], references: [id])
+  address Address @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+model Cart {
+  userId Int
+  ticketId Int
+  qty Decimal
+  user User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  @@id([userId,ticketId])
+}
+
+model Point {
+  id Int @id @default(autoincrement())
+  userId Int
+  points Int      @default(0)
+  createdAt DateTime @default(now())
+  expiredAt DateTime @default(now() + interval 3 month)
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Referral {
+  id Int @id @default(autoincrement())
+  referrerId Int
+  refereeId Int
+  referralDate DateTime @default(now())
+}
+
+model Review {
+  id Int @id @default(autoincrement())
+  eventId Int
+  rating Int
+  comment String?
+  createdAt  DateTime @default(now())
+  event Event @relation(fields: [eventId], references: [id])
+}
+
+model EventDashboard {
+  id Int @id @default(autoincrement())
+  organizerId Int
+  eventId Int
+  registrations Int
+  transactions  Int
+  year Int
+  month Int?
+  day Int?
+  event Event @relation(fields: [eventId], references: [id])
+  organizer     User      @relation(fields: [organizerId], references: [id])
 }
