@@ -140,7 +140,6 @@ model Promotion {
   event Event @relation(fields: [eventId], references: [id])
 }
 
-
 model Point {
   id Int @id @default(autoincrement())
   userId Int
@@ -162,7 +161,7 @@ model Review {
   eventId Int
   rating Int
   comment String?
-  createdAt  DateTime @default(now())
+  createdAt DateTime @default(now())
   event Event @relation(fields: [eventId], references: [id])
 }
 
@@ -176,5 +175,5 @@ model EventDashboard {
   month Int?
   day Int?
   event Event @relation(fields: [eventId], references: [id])
-  organizer     User      @relation(fields: [organizerId], references: [id])
+  organizer User @relation(fields: [organizerId], references: [id])
 }
