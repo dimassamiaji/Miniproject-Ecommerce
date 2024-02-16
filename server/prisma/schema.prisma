@@ -12,8 +12,8 @@ datasource db {
 
 
 enum Gender {
-male
-female
+  male
+  female
 }
 
 enum Role {
@@ -22,8 +22,8 @@ enum Role {
 }
 
 enum StockStatus { 
-  Available
-  Sold-Out
+  available
+  sold-Out
 }
 
 
@@ -75,7 +75,7 @@ model Ticket {
   eventId Int
   price Float
   Stock Int
-  orderDate DateTime
+  orderDate DateTime @default(now())
   transactions Transaction[]
   stock Stock[]
   ticket_category Ticket_Category[]
@@ -96,7 +96,7 @@ model Ticket_Category {
   ticketId Int
   categoryId Int
   ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  category  Category  @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   @@id([ticketId,categoryId])
 }
 
@@ -116,7 +116,7 @@ model Transaction {
   totalTicket Int
   totalPrice Float
   buyingMethod String
-  transactionDate DateTime
+  transactionDate DateTime @default(now())
   user User @relation(fields: [userId], references: [id])
   ticket Ticket @relation(fields: [tiketId], references: [id])
   address Address @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -135,8 +135,8 @@ model Promotion {
   eventId Int
   type String // Discount, Voucher, etc.
   value Float
-  startDate DateTime
-  endDate DateTime
+  startDate DateTime @default(now())
+  endDate DateTime @default(now())
   event Event @relation(fields: [eventId], references: [id])
 }
 
