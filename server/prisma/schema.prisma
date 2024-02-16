@@ -51,6 +51,7 @@ model Event {
   id Int @id @default(autoincrement())
   eventName String
   description String
+  price Decimal
   startDate DateTime @default(now())
   endDate DateTime @default(now())
   address string
@@ -59,7 +60,8 @@ model Event {
   ticketTypes String?
   tickets Ticket[]
   reviews Review[]
-  location Location
+  locations Location []
+  promotions Promotion []
 }
 
 model Location {
@@ -127,6 +129,17 @@ model Cart {
   ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   @@id([userId,ticketId])
 }
+
+model Promotion {
+  id Int  @id @default(autoincrement())
+  eventId Int
+  type String // Discount, Voucher, etc.
+  value Float
+  startDate DateTime
+  endDate DateTime
+  event Event @relation(fields: [eventId], references: [id])
+}
+
 
 model Point {
   id Int @id @default(autoincrement())
