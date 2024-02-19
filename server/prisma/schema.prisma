@@ -26,18 +26,21 @@ enum StockStatus {
   soldout
 }
 
+enum TicketType {
+  bronze
+  silver
+  gold
+}
 
 model User {
   id Int @id @default(autoincrement())
-  name String
+  firstName String
+  lastName String
   email String @unique
   password String
-  role Role
-  gender Gender
-  referralNumber String
-  referredBy String
-  discountCoupon String
-  discountExpiry DateTime @default(now())
+  role Role? @default(customer)
+  gender Gender? 
+  referralCode @id @default(uuid())
   phoneNumber String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -46,6 +49,12 @@ model User {
   categories Category[]
   points Point[]
   eventdashboards EventDashboard[]
+}
+
+model Location {
+  id Int @id @default(autoincrement())
+  locationName String
+  events Event[]
 }
 
 model Event {
@@ -57,7 +66,7 @@ model Event {
   endDate DateTime @default(now())
   availableSeats Int
   isFree Boolean @default(false)
-  ticketTypes String
+  ticketType TicketType?
   tickets Ticket[]
   reviews Review[]
   locations Location []
@@ -65,17 +74,11 @@ model Event {
   eventDashboards EventDashboard[]
 }
 
-model Location {
-  id Int @id @default(autoincrement())
-  locationName String
-  events Event[]
-}
-
 model Ticket {
   id Int @id @default(autoincrement())
   eventId Int
   userId Int
-  price Float
+  price Decimal
   Stock Int
   orderDate DateTime @default(now())
   transactions Transaction[]
@@ -105,7 +108,7 @@ model Stock {
   id Int @id @default(autoincrement())
   ticketId Int
   stock_qty Decimal
-  stockstatus StockStatus
+  stockstatus StockStatus?
   ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -124,8 +127,7 @@ model Transaction {
 model Promotion {
   id Int  @id @default(autoincrement())
   eventId Int
-  promoType String // Discount, Voucher, etc.
-  value Float
+  discountCoupon String
   startDate DateTime @default(now())
   endDate DateTime @default(now())
   event Event @relation(fields: [eventId], references: [id])
