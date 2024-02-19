@@ -142,13 +142,6 @@ model Point {
   user User @relation(fields: [userId], references: [id])
 }
 
-model Referral {
-  id Int @id @default(autoincrement())
-  referrerId Int
-  refereeId Int
-  referralDate DateTime @default(now())
-}
-
 model Review {
   id Int @id @default(autoincrement())
   eventId Int

@@ -1,38 +1,28 @@
 /** @format */
 
 import express, { Application, Response, Request, NextFunction } from "express";
-import { PrismaClient } from "@prisma/client";
-import { routes } from "./routes";
-import cors from "cors";
 import { config } from "dotenv";
+import { route as userRoutes } from "./routes/user";
+import { route as eventRoutes } from "./routes/events";
+import { PrismaClient } from "@prisma/client";
+import { verifyUser } from "./middlewares/auth-middlewares";
+import cors from "cors";
 config();
-
-export const prisma = new PrismaClient();
-
-export const secretKey = String(process.env.secretKey);
 const app: Application = express();
+const PORT = process.env.PORT || 8000;
+export const prisma = new PrismaClient();
+export const secretKey = process.env.secretKey;
 app.use(express.json());
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-app.use(
-  "/public/products",
-  express.static(`${__dirname}/public/images/product_images`)
-);
-
-const PORT = process.env.PORT;
-
-//routes
-app.use("/users", routes.userRoutes);
-app.use("/products", routes.productRoutes);
+app.use("/users", userRoutes);
+app.use("/events", verifyUser, eventRoutes);
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).send({ message: error.message || "internal server error" });
-}); //error handler
-
-app.use("*", (req: Request, res: Response, next: NextFunction) => {
-  res.status(404).send("page not found"); //page not found handler
+  res.status(500).send({
+    message: error.message,
+  });
 });
 
 app.listen(PORT, () => {
-  console.log("api is running on port", PORT);
+  console.log("app runs on port", PORT);
 });

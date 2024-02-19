@@ -1,173 +1,89 @@
 /** @format */
-import { Response, Request, NextFunction } from "express";
-import { prisma, secretKey } from ".."; //accessing model
-import { Prisma } from "@prisma/client"; // accessing interface/types
-
+import { Request, Response, NextFunction } from "express";
 import { genSalt, hash, compare } from "bcrypt";
-import { sign, verify } from "jsonwebtoken";
-import { mailer, transport } from "../lib/nodemailer";
-import mustache, { render } from "mustache";
-import fs from "fs";
-type TUser = {
-  email: string;
-};
-
-const template = fs
-  .readFileSync(__dirname + "/../templates/verify.html")
-  .toString();
-
+import { Prisma } from "@prisma/client";
+import { prisma, secretKey } from "..";
+import { ReqUser } from "../middlewares/auth-middlewares";
+import { sign } from "jsonwebtoken";
 export const userController = {
-  async register(req: Request, res: Response, next: NextFunction) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password, firstName, lastName, gender } = req.body;
-      const salt = await genSalt(10);
-
-      const hashedPassword = await hash(password, salt);
-
-      const newUser: Prisma.UserCreateInput = {
-        email,
-        password: hashedPassword,
-        firstName,
-        lastName,
-        gender,
-      };
-
+      const { email, password } = req.body;
       const checkUser = await prisma.user.findUnique({
         where: {
           email,
         },
       });
 
-      if (checkUser?.id) throw Error("user sudah terdaftar");
+      if (!checkUser) throw Error("user not found");
 
-      await prisma.user.create({
-        data: newUser,
-      });
-      res.send({
-        success: true,
-        message: "berhasil register",
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
-  async login(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { email, password } = req.query;
+      const checkPassword = await compare(password, checkUser.password);
+      if (!checkPassword) throw Error("wrong password");
 
-      const user = await prisma.user.findUnique({
-        where: {
-          email: String(email),
-        },
-      });
-      if (!user) throw Error("email/password salah");
-      const checkPassword = await compare(String(password), user.password);
-      const resUser = {
-        id: user.id,
-        email: user.email,
-        first_name: user.firstName,
-        last_name: user.lastName,
-        gender: user.gender,
-        role: user.role,
-      };
-      if (checkPassword) {
-        const token = sign(resUser, secretKey, {
-          expiresIn: "5m",
-        });
+      const { firstName,lastName, role, id } = checkUser;
 
-        return res.send({
-          success: true,
-          result: resUser,
-          token,
-        });
-      }
-      // npm i jsonwebtoken @types/jsonwebtoken
-
-      throw Error("email/password tidak sesuai");
-    } catch (error) {
-      next(error);
-    }
-  },
-  async forgotPassword(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { password, email } = req.body;
-
-      const salt = await genSalt(10);
-
-      const hashedPassword = await hash(password, salt);
-      const userEditPassword: Prisma.UserUpdateInput = {
-        password: hashedPassword,
-      };
-      await prisma.user.update({
-        data: userEditPassword,
-        where: {
-          email: String(email),
-        },
-      });
-      res.send({
-        success: true,
-        message: "berhasil merubah password",
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
-  async keepLogin(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { authorization } = req.headers;
-
-      if (!authorization) throw Error("unauthorized");
-
-      const verifyUser = verify(authorization, secretKey) as TUser;
-      const checkUser = await prisma.user.findUnique({
-        select: {
-          id: true,
-          email: true,
-          gender: true,
-          firstName: true,
-          lastName: true,
-          role: true,
-        },
-        where: {
-          email: verifyUser.email,
-        },
-      });
-      if (!checkUser) throw Error("unauthorized 2");
-
-      const token = sign(checkUser, secretKey, {
+      //email,name,role
+      const token = sign({ email, firstName, lastName, role }, String(process.env.secretKey), {
         expiresIn: "1hr",
       });
+
       res.send({
-        success: true,
-        result: checkUser,
+        message: "berhasil login",
+        result: {
+          id,
+          email,
+          firstName,
+          lastName,
+          role,
+        },
         token,
       });
     } catch (error) {
       next(error);
     }
   },
-  async sendMail(req: Request, res: Response, next: NextFunction) {
+  async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, fullname } = req.query;
+      const { email, password, firstName, lastName } = req.body;
 
-      const rendered = mustache.render(template, {
+      const check = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
+
+      if (check?.id) throw Error("email sudah terdaftar");
+      const salt = await genSalt(10);
+      const hashedPassword = await hash(password, salt);
+
+      const newUser: Prisma.UserCreateInput = {
         email,
-        fullname,
-        verify_url: "",
+        password: hashedPassword,
+        firstName,
+        lastName
+      };
+
+      await prisma.user.create({
+        data: newUser,
       });
 
-      mailer({
-        to: String(email),
-        subject: "verify account",
-        text: "",
-        html: rendered,
-      });
-
-      res.send({
-        message: "email berhasil dikirim",
+      res.status(201).send({
+        message: "berhasil daftar",
       });
     } catch (error) {
+      console.log(error);
+
       next(error);
     }
+  },
+  async keepLogin(req: ReqUser, res: Response, next: NextFunction) {
+    const token = await sign({ ...req.user }, String(secretKey), {
+      expiresIn: "1hr",
+    });
+    res.send({
+      message: "keep login",
+      result: req.user,
+      token,
+    });
   },
 };
