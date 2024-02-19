@@ -33,10 +33,10 @@ model User {
   email String @unique
   password String
   role Role
-  gender Gender?
+  gender Gender
   referralNumber String
-  referredBy String?
-  discountCoupon String?
+  referredBy String
+  discountCoupon String
   discountExpiry DateTime @default(now())
   phoneNumber String
   createdAt DateTime @default(now())
@@ -44,7 +44,9 @@ model User {
   transactions Transaction[]
   tickets Ticket []
   categories Category[]
-  carts Cart[]
+  referrerReferral Referral[]
+  refereeReferral  Referral[]
+  points Point[]
 }
 
 model Event {
@@ -57,11 +59,12 @@ model Event {
   address string
   availableSeats Int
   isFree Boolean @default(false)
-  ticketTypes String?
+  ticketTypes String
   tickets Ticket[]
   reviews Review[]
   locations Location []
   promotions Promotion []
+  eventDashboards EventDashboard[]
 }
 
 model Location {
@@ -77,16 +80,15 @@ model Ticket {
   Stock Int
   orderDate DateTime @default(now())
   transactions Transaction[]
-  stock Stock[]
+  stocks Stock[]
   ticket_category Ticket_Category[]
-  carts Cart[]
   event Event @relation(fields: [eventId], references: [id])
   user User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model Category {
   id Int @id @default(autoincrement())
-  category_name String
+  categoryName String
   userId Int
   user User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   ticket_category Ticket_Category[]
@@ -104,7 +106,7 @@ model Stock {
   id Int @id @default(autoincrement())
   ticketId Int
   stock_qty Decimal
-  status StockStatus?
+  stockstatus StockStatus
   ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -121,19 +123,11 @@ model Transaction {
   ticket Ticket @relation(fields: [tiketId], references: [id])
   address Address @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
-model Cart {
-  userId Int
-  ticketId Int
-  qty Decimal
-  user User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  @@id([userId,ticketId])
-}
 
 model Promotion {
   id Int  @id @default(autoincrement())
   eventId Int
-  type String // Discount, Voucher, etc.
+  promoType String // Discount, Voucher, etc.
   value Float
   startDate DateTime @default(now())
   endDate DateTime @default(now())
@@ -160,7 +154,7 @@ model Review {
   id Int @id @default(autoincrement())
   eventId Int
   rating Int
-  comment String?
+  comment String
   createdAt DateTime @default(now())
   event Event @relation(fields: [eventId], references: [id])
 }
@@ -172,8 +166,8 @@ model EventDashboard {
   registrations Int
   transactions  Int
   year Int
-  month Int?
-  day Int?
+  month Int
+  day Int
   event Event @relation(fields: [eventId], references: [id])
   organizer User @relation(fields: [organizerId], references: [id])
 }
