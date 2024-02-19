@@ -57,10 +57,11 @@ export const userController = {
       const hashedPassword = await hash(password, salt);
 
       const newUser: Prisma.UserCreateInput = {
-        email,
-        password: hashedPassword,
-        firstName,
-        lastName
+          email,
+          password: hashedPassword,
+          firstName,
+          lastName,
+          phoneNumber: ""
       };
 
       await prisma.user.create({

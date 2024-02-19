@@ -6,9 +6,9 @@ import { ReqUser } from "../middlewares/auth-middlewares";
 export const eventController = {
   async create(req: ReqUser, res: Response, next: NextFunction) {
     try {
-      const { title, description } = req.body;
+      const { eventName, description } = req.body;
       const newData: Prisma.EventCreateInput = {
-        title,
+        eventName,
         description,
         user: {
           connect: {
@@ -38,7 +38,8 @@ export const eventController = {
           user: {
             select: {
               id: true,
-              name: true,
+              firstName: true,
+              lastName: true,
               email: true,
             },
           },
