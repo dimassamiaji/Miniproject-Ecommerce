@@ -23,7 +23,7 @@ enum Role {
 
 enum StockStatus { 
   available
-  sold-Out
+  soldout
 }
 
 
@@ -44,9 +44,8 @@ model User {
   transactions Transaction[]
   tickets Ticket []
   categories Category[]
-  referrerReferral Referral[]
-  refereeReferral  Referral[]
   points Point[]
+  eventdashboards EventDashboard[]
 }
 
 model Event {
@@ -56,7 +55,6 @@ model Event {
   price Decimal
   startDate DateTime @default(now())
   endDate DateTime @default(now())
-  address string
   availableSeats Int
   isFree Boolean @default(false)
   ticketTypes String
@@ -69,13 +67,14 @@ model Event {
 
 model Location {
   id Int @id @default(autoincrement())
-  Location_name string
+  locationName String
   events Event[]
 }
 
 model Ticket {
   id Int @id @default(autoincrement())
   eventId Int
+  userId Int
   price Float
   Stock Int
   orderDate DateTime @default(now())
@@ -113,15 +112,13 @@ model Stock {
 model Transaction {
   id Int @id @default(autoincrement())
   userId Int
-  addressId Int
   ticketId Int
   totalTicket Int
   totalPrice Float
   buyingMethod String
   transactionDate DateTime @default(now())
   user User @relation(fields: [userId], references: [id])
-  ticket Ticket @relation(fields: [tiketId], references: [id])
-  address Address @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ticket Ticket @relation(fields: [ticketId], references: [id])
 }
 
 model Promotion {
@@ -139,7 +136,7 @@ model Point {
   userId Int
   points Int @default(0)
   createdAt DateTime @default(now())
-  expiredAt DateTime @default(now() + interval 3 month)
+  expiredAt DateTime @default(now())
   user User @relation(fields: [userId], references: [id])
 }
 
@@ -161,13 +158,13 @@ model Review {
 
 model EventDashboard {
   id Int @id @default(autoincrement())
-  organizerId Int
   eventId Int
+  userId Int
   registrations Int
   transactions  Int
   year Int
   month Int
   day Int
   event Event @relation(fields: [eventId], references: [id])
-  organizer User @relation(fields: [organizerId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
