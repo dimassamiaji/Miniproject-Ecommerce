@@ -1,20 +1,26 @@
 -- CreateTable
 CREATE TABLE `User` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191) NOT NULL,
+    `firstName` VARCHAR(191) NOT NULL,
+    `lastName` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
-    `role` ENUM('customer', 'organizer') NOT NULL,
-    `gender` ENUM('male', 'female') NOT NULL,
-    `referralNumber` VARCHAR(191) NOT NULL,
-    `referredBy` VARCHAR(191) NOT NULL,
-    `discountCoupon` VARCHAR(191) NOT NULL,
-    `discountExpiry` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `role` ENUM('customer', 'organizer') NULL DEFAULT 'customer',
+    `gender` ENUM('male', 'female') NULL,
+    `referralCode` VARCHAR(191) NOT NULL,
     `phoneNumber` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `User_email_key`(`email`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Location` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `locationName` VARCHAR(191) NOT NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -28,15 +34,7 @@ CREATE TABLE `Event` (
     `endDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `availableSeats` INTEGER NOT NULL,
     `isFree` BOOLEAN NOT NULL DEFAULT false,
-    `ticketTypes` VARCHAR(191) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Location` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `locationName` VARCHAR(191) NOT NULL,
+    `ticketType` ENUM('bronze', 'silver', 'gold') NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -46,7 +44,7 @@ CREATE TABLE `Ticket` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `eventId` INTEGER NOT NULL,
     `userId` INTEGER NOT NULL,
-    `price` DOUBLE NOT NULL,
+    `price` DECIMAL(65, 30) NOT NULL,
     `Stock` INTEGER NOT NULL,
     `orderDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -75,7 +73,7 @@ CREATE TABLE `Stock` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `ticketId` INTEGER NOT NULL,
     `stock_qty` DECIMAL(65, 30) NOT NULL,
-    `stockstatus` ENUM('available', 'soldout') NOT NULL,
+    `stockstatus` ENUM('available', 'soldout') NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -97,8 +95,7 @@ CREATE TABLE `Transaction` (
 CREATE TABLE `Promotion` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `eventId` INTEGER NOT NULL,
-    `promoType` VARCHAR(191) NOT NULL,
-    `value` DOUBLE NOT NULL,
+    `discountCoupon` VARCHAR(191) NOT NULL,
     `startDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `endDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 

@@ -19,17 +19,18 @@ const template = fs
 export const userController = {
   async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password, firstName, lastName, gender } = req.body;
+      const { email, password, firstName, lastName, gender, phoneNumber } = req.body;
       const salt = await genSalt(10);
 
       const hashedPassword = await hash(password, salt);
 
-      const newUser: Prisma.UserCreateInput = {
+      const newUser : Prisma.UserCreateInput = {
         email,
         password: hashedPassword,
         firstName,
         lastName,
         gender,
+        phoneNumber,
       };
 
       const checkUser = await prisma.user.findUnique({

@@ -44,6 +44,7 @@ model User {
   phoneNumber String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  events Event []
   transactions Transaction[]
   tickets Ticket []
   categories Category[]
@@ -67,6 +68,9 @@ model Event {
   availableSeats Int
   isFree Boolean @default(false)
   ticketType TicketType?
+  image_url String? @db.VarChar(255)
+  userId Int
+  user   User  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tickets Ticket[]
   reviews Review[]
   locations Location []
@@ -142,12 +146,6 @@ model Point {
   user User @relation(fields: [userId], references: [id])
 }
 
-model Referral {
-  id Int @id @default(autoincrement())
-  referrerId Int
-  refereeId Int
-  referralDate DateTime @default(now())
-}
 
 model Review {
   id Int @id @default(autoincrement())
@@ -167,6 +165,6 @@ model EventDashboard {
   year Int
   month Int
   day Int
-  event Event @relation(fields: [eventId], references: [id])
+  event Event @relation(fields:[eventId], references:[id])
   user User @relation(fields: [userId], references: [id])
 }
