@@ -1,6 +1,7 @@
+/** @format */
 "use client";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import userSlice from "./slices/userSlices";
+import userSlice from "./slices/userSlice";
 import { Provider } from "react-redux";
 const rootReducer = combineReducers({
   auth: userSlice,

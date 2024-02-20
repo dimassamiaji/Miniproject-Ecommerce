@@ -10,8 +10,8 @@ import AuthProvider from "@/routes/auth-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "KickAvenue",
-  description: "Kickavenue",
+  title: "Gotix",
+  description: "Gotix",
 };
 
 export default function RootLayout({ children }) {

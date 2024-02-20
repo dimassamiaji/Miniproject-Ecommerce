@@ -3,6 +3,7 @@
 import { userLogin } from "@/redux/middleware/user";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
+import Banner from "../../../assets/imaginedragons.jpg";
 function Page() {
   const dispatch = useDispatch();
 
@@ -18,6 +19,11 @@ function Page() {
       <div
         className="flex justify-center items-center min-h-screen 
        text-sm p-3"
+        style={{
+          backgroundImage: { Banner },
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
         <div className="flex flex-col max-w-[440px] ">
           <h1 className=" text-3xl font-semibold">Masukan akun kamu</h1>
@@ -29,7 +35,7 @@ function Page() {
           <div className=" font-bold mt-5">Email</div>
           <input
             className=" p-3 bg-[#F3F4F6] rounded-lg "
-            placeholder="chairin@mail.com"
+            placeholder="user@mail.com"
             id="email"
             type="email"
           ></input>

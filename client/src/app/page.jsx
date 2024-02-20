@@ -1,12 +1,12 @@
 /** @format */
 
 import NavbarComponent from "@/components/navbar";
-import ProductListComponent from "@/components/productList";
+import ProductListComponent from "@/components/eventList";
 import SliderComponent from "@/components/slider";
 
 export const metadata = {
-  title: "Kickavenue - Home",
-  description: "tempat jualan sepatu",
+  title: "Gotix - Home",
+  description: "tempat jualan ticket",
 };
 
 export default function Home() {

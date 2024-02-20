@@ -2,11 +2,13 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
 import { FiShoppingCart } from "react-icons/fi";
-import { functionLogout } from "../redux/slices/userSlices";
+
+import { functionLogout } from "../redux/slices/userSlice";
 import UserIcon from "../assets/user.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Logo from "../assets/Logo-edit2.png";
 function NavbarComponent() {
   const userSelector = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -16,20 +18,23 @@ function NavbarComponent() {
 
   return (
     <div
-      className={`flex justify-around  py-5  border-gray-400 items-center m-auto  max-w-screen-2xl w-full  sticky top-0 bg-white`}
+      className={`flex justify-between py-5 px-5 border-gray-400 items-center m-auto  max-w-screen-2xl w-full  sticky top-0 bg-white`}
     >
       {/* logo */}
       <Link className="font-bold text-xl" href={"/"}>
-        BrandName
+        <Image
+          src={Logo}
+          alt="Logo Perusahaan"
+          width={150} // Sesuaikan lebar sesuai kebutuhan
+          height={40} // Sesuaikan tinggi sesuai kebutuhan
+        />
       </Link>
 
       {/* menus */}
       <div className="flex gap-4 text-sm font-semibold text-[#737373] items-center">
-        <Link href="/">Home</Link>
-        <Link href={"/"}>Shop</Link>
-        <Link href={"/"}>About</Link>
-        <Link href={"/"}>Blog</Link>
-        <Link href={"/"}>Contact</Link>
+        <Link href={"/"}>Find Events</Link>
+        <Link href={"/"}>Create Events</Link>
+        <Link href={"/"}>Help Center</Link>
       </div>
 
       {/* login and register */}
