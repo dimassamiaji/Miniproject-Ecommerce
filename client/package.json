@@ -21,7 +21,10 @@
     "@mui/material": "^5.15.7",
     "@reduxjs/toolkit": "^2.1.0",
     "axios": "^1.6.7",
-    "formik": "^2.4.5"
+    "formik": "^2.4.5",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "react-icons": "^5.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
