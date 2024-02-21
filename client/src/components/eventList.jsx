@@ -66,7 +66,8 @@ export function EventCard({ image_url, eventName, id, price }) {
   return (
     <Link className="flex flex-col" href={"/events/" + id}>
       <img
-        src={process.env.API_URL + image_url}
+        // src={process.env.API_URL + image_url}
+        src={image_url}
         className=" max-h-[154px] h-full max-w-[212px] w-full"
         alt=""
       />
