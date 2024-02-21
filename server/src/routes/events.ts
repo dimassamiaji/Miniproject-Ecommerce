@@ -1,23 +1,23 @@
 /** @format */
 
 import express, { Router } from "express";
-import { productController } from "../controllers/products";
+import { eventController } from "../controllers/events";
 import { verifyAdmin, verifyUser } from "../middlewares/auth-middleware";
 import { fileUploader } from "../middlewares/multer";
 export const route: Router = express.Router();
-route.get("/", productController.getProducts);
-route.get("/:id", productController.getProductById);
+route.get("/", eventController.getEvents);
+route.get("/:id", eventController.getEventById);
 route.patch(
   "/:id",
   verifyUser,
   verifyAdmin,
   fileUploader({
-    destinationFolder: "/images/product_images",
-    prefix: "PRODUCT",
+    destinationFolder: "/images/event_images",
+    prefix: "EVENT",
     filetype: "image",
   }).single("image"),
 
-  productController.editProduct
+  eventController.editEvent
 );
 
 route.post(
@@ -25,11 +25,11 @@ route.post(
   verifyUser,
   verifyAdmin,
   fileUploader({
-    destinationFolder: "/images/product_images",
-    prefix: "PRODUCT",
+    destinationFolder: "/images/event_images",
+    prefix: "EVENT",
     filetype: "image",
   }).single("image"),
-  productController.addProduct
+  eventController.addEvent
 );
 
-route.delete("/:id", verifyUser, verifyAdmin, productController.deleteProduct);
+route.delete("/:id", verifyUser, verifyAdmin, eventController.deleteEvent);
