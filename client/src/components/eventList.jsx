@@ -33,9 +33,7 @@ function EventListComponent() {
     () => [...events].sort((a, b) => a.price - b.price),
     [events]
   );
-  // const ps = [...products].sort((a, b) => a.price - b.price);
 
-  // console.log(ps);
   return (
     <div className="w-full">
       <div className=" mt-5 px-7 max-w-screen-2xl  w-full">
@@ -62,7 +60,7 @@ function EventListComponent() {
 
 export default EventListComponent;
 
-export function ProductCard({ image_url, eventName, id, price }) {
+export function EventCard({ image_url, eventName, id, price }) {
   return (
     <Link className="flex flex-col" href={"/events/" + id}>
       <img
