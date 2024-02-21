@@ -7,7 +7,7 @@ export const transport = nodemailer.createTransport({
     user: process.env.nodemailer_email,
     pass: process.env.nodemailer_password,
   },
-  host: "smtp.gmail.com",
+  host: "t.fadlifauzi.gmail.com",
   service: "gmail",
 });
 
@@ -22,8 +22,8 @@ export const mailer = async ({ subject, html, to, text }: mailer) => {
   await transport.sendMail({
     subject: String(subject) || "testing",
     html: String(html) || "<h1> send through api </h1>",
-    to: String(to) || "udin@gmail.com",
-    text: String(text) || "hello ridwan",
+    to: String(to) || "fadly@gmail.com",
+    text: String(text) || "hello fadly",
   });
 };
 

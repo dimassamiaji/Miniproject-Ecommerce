@@ -1,15 +1,113 @@
 /** @format */
-import { Request, Response, NextFunction } from "express";
+
+import { Response, Request, NextFunction } from "express";
 import { prisma } from "..";
 import { Prisma } from "@prisma/client";
-import { ReqUser } from "../middlewares/auth-middlewares";
+import { ReqUser } from "../middlewares/auth-middleware";
 export const eventController = {
-  async create(req: ReqUser, res: Response, next: NextFunction) {
+  async getEvents(req: Request, res: Response, next: NextFunction) {
     try {
-      const { eventName, description } = req.body;
-      const newData: Prisma.EventCreateInput = {
+      const { eventName } = req.query;
+      const events = await prisma.event.findMany({
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+        where: {
+          eventName: {
+            contains: String(eventName),
+          },
+        },
+      });
+
+      res.send({
+        success: true,
+        result: events,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  async getEventById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const events = await prisma.event.findUnique({
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+        where: {
+          id: Number(req.params.id),
+        },
+      });
+
+      res.send({
+        success: true,
+        result: events,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  async editEvent(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { eventName, image_url, price, description } = req.body;
+      const editEvent: Prisma.EventUpdateInput = {
         eventName,
+        price,
         description,
+      };
+      console.log(req.file);
+
+      await prisma.event.update({
+        data: editEvent,
+        where: {
+          id: Number(req.params.id),
+        },
+      });
+      res.send({
+        success: true,
+        message: "data berhasil diedit",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  async deleteEvent(req: Request, res: Response, next: NextFunction) {
+    try {
+      await prisma.event.delete({
+        where: {
+          id: Number(req.params.id),
+        },
+      });
+      res.send({
+        success: true,
+        message: "data berhasil dihapus",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  async addEvent(req: ReqUser, res: Response, next: NextFunction) {
+    try {
+      const { eventName, description, price, location } = req.body;
+      const newEvent: Prisma.EventCreateInput = {
+        eventName,
+        image_url: req.file?.filename,
+        price,
+        description,
+        location: location,
         user: {
           connect: {
             id: req.user?.id,
@@ -18,70 +116,11 @@ export const eventController = {
       };
 
       await prisma.event.create({
-        data: newData,
+        data: newEvent,
       });
-
-      res.status(201).send({
-        message: "data berhasil dibuat",
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
-  async read(req: ReqUser, res: Response, next: NextFunction) {
-    try {
-      const events = await prisma.event.findMany({
-        where: {
-          userId: String(req.user?.id),
-        },
-        include: {
-          user: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              email: true,
-            },
-          },
-        },
-      });
-
       res.send({
-        message: "fetch event list",
-        result: events,
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
-  async update(req: ReqUser, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      await prisma.event.update({
-        data: req.body,
-        where: {
-          id,
-        },
-      });
-
-      res.send({
-        message: "data berhasil diedit",
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
-  async delete(req: ReqUser, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      await prisma.event.delete({
-        where: {
-          id,
-        },
-      });
-
-      res.send({
-        message: "data berhasil dihapus",
+        success: true,
+        message: "data berhasil ditambahkan",
       });
     } catch (error) {
       next(error);
