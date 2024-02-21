@@ -1,7 +1,19 @@
+/** @format */
+import { Response, Request, NextFunction } from "express";
+
 import express, { Router } from "express";
 import { userController } from "../controllers/user";
-import { verifyUser } from "../middlewares/auth-middlewares";
 export const route: Router = express.Router();
-route.post("/v1", userController.login); //login
-route.post("/v2", userController.register); //register
-route.post("/v3", verifyUser, userController.keepLogin); //keep-login
+route.get(
+  "/",
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log("hello");
+    next();
+  },
+  userController.login
+);
+route.get("/send-mail", userController.sendMail);
+route.get("/keep-login", userController.keepLogin);
+
+route.post("/", userController.register);
+route.patch("/", userController.forgotPassword);
