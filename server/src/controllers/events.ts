@@ -1,3 +1,5 @@
+/** @format */
+
 import { Response, Request, NextFunction } from "express";
 import { prisma } from "..";
 import { Prisma } from "@prisma/client";
