@@ -7,7 +7,7 @@ import { NavbarAdminComponent } from "@/components/navbar";
 import Search from "@/assets/search.png";
 import { useFormik } from "formik";
 import { axiosInstance } from "@/axios/axios";
-import AdminProductCard from "@/components/admin/adminCard";
+import AdminEventCard from "@/components/admin/adminCard";
 import { useDebounce } from "use-debounce";
 
 /** @format */
@@ -15,9 +15,9 @@ function Page() {
   const [search, setSearch] = useState("");
   const [value] = useDebounce(search, 500);
 
-  const [products, setProducts] = useState([]);
-  const initalProduct = {
-    product_name: "",
+  const [events, setEvents] = useState([]);
+  const initalEvent = {
+    eventName: "",
     price: 0,
     description: "",
     image_url: "",
@@ -26,7 +26,7 @@ function Page() {
   };
 
   const formik = useFormik({
-    initialValues: initalProduct,
+    initialValues: initalEvent,
     onSubmit: () => {
       console.log("test");
       save();
@@ -34,19 +34,19 @@ function Page() {
   });
 
   const edit = async (id) => {
-    const res = await axiosInstance().get("/products/" + id);
-    const product = res.data.result;
-    formik.setFieldValue("id", product.id);
-    formik.setFieldValue("product_name", product.product_name);
-    formik.setFieldValue("image_url", product.image_url);
+    const res = await axiosInstance().get("/events/" + id);
+    const event = res.data.result;
+    formik.setFieldValue("id", event.id);
+    formik.setFieldValue("eventName", event.eventName);
+    formik.setFieldValue("image_url", event.image_url);
 
-    formik.setFieldValue("price", product.price);
-    formik.setFieldValue("description", product.description);
+    formik.setFieldValue("price", event.price);
+    formik.setFieldValue("description", event.description);
   };
   const save = () => {
     console.log(formik.values);
     const form = new FormData();
-    form.append("product_name", formik.values.product_name);
+    form.append("eventName", formik.values.eventName);
     form.append("image_url", formik.values.image_url);
     form.append("image", formik.values.image);
     form.append("price", formik.values.price);
@@ -54,10 +54,10 @@ function Page() {
 
     if (formik.values.id) {
       axiosInstance()
-        .patch("/products/" + formik.values.id, form)
+        .patch("/events/" + formik.values.id, form)
         .then(() => {
           alert("data berhasil diedit");
-          fetchProducts();
+          fetchEvents();
         })
         .catch((err) => {
           console.log(err);
@@ -65,10 +65,10 @@ function Page() {
     } else {
       axiosInstance();
       axiosInstance()
-        .post("/products/", form)
+        .post("/events/", form)
         .then(() => {
           alert("data berhasil ditambahkan");
-          fetchProducts();
+          fetchEvents();
         })
         .catch((err) => {
           console.log(err);
@@ -78,25 +78,25 @@ function Page() {
   };
 
   const hapus = (id) => {
-    if (window.confirm("apakah anda yakin menghapus product id " + id + "?"))
+    if (window.confirm("apakah anda yakin menghapus event id " + id + "?"))
       axiosInstance()
-        .delete("/products/" + id)
+        .delete("/events/" + id)
         .then(() => {
           alert(`id ${id} berhasil dihapus`);
-          fetchProducts();
+          fetchEvents();
         })
         .catch((err) => console.log(err));
   };
 
-  const fetchProducts = () => {
+  const fetchEvents = () => {
     axiosInstance()
-      .get("/products/", {
+      .get("/events/", {
         params: {
-          product_name: search,
+          eventName: search,
         },
       })
       .then((res) => {
-        setProducts(res.data.result);
+        setEvents(res.data.result);
       })
       .catch((err) => console.log(err));
   };
@@ -111,7 +111,7 @@ function Page() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchEvents();
   }, [value]);
 
   const upload = useRef(null);
@@ -125,7 +125,7 @@ function Page() {
               <img src={Search} alt="" className=" w-3 h-3" />
               <input
                 type="text"
-                placeholder="Type any products here"
+                placeholder="Type any events here"
                 className=" outline-none             "
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -137,33 +137,33 @@ function Page() {
             <tr className=" text-center ">
               <th>IMAGE</th>
 
-              <th>PRODUCT NAME</th>
+              <th>EVENT NAME</th>
               <th>PRICE</th>
             </tr>
-            {products.map((product, key) => (
-              <AdminProductCard
-                {...product}
+            {events.map((event, key) => (
+              <AdminEventCard
+                {...event}
                 key={key}
-                edit={() => edit(product.id)}
-                hapus={() => hapus(product.id)}
+                edit={() => edit(event.id)}
+                hapus={() => hapus(event.id)}
               />
             ))}
           </table>
           <div className="mt-16 w-full py-3">
             <form id="form" action="" onSubmit={formik.handleSubmit}>
-              <h1 className="font-bold text-2xl mb-3">Add Product</h1>
+              <h1 className="font-bold text-2xl mb-3">Add Event</h1>
               <div className="flex flex-col gap-1 ">
                 <table>
                   <tr>
-                    <td> Product Name</td>
+                    <td> Event Name</td>
                     <td>
                       <input
                         type="text"
-                        placeholder="Product Name"
+                        placeholder="Event Name"
                         className="border p-1  w-96 "
                         required
-                        id="product_name"
-                        value={formik.values.product_name}
+                        id="eventName"
+                        value={formik.values.eventName}
                         onChange={formik.handleChange}
                         // onChange={(e) => {
                         //   formik.setFieldValue("product_name", e.target.value);
@@ -172,7 +172,7 @@ function Page() {
                     </td>
                   </tr>
                   <tr>
-                    <td> Product Image</td>
+                    <td> Event Image</td>
                     <td>
                       <input
                         type="file"
@@ -194,11 +194,11 @@ function Page() {
                     </td>
                   </tr>
                   <tr>
-                    <td> Product Price</td>
+                    <td> Event Price</td>
                     <td>
                       <input
                         type="number"
-                        placeholder="Product Price"
+                        placeholder="Event Price"
                         className="border p-1 w-96"
                         min={50000}
                         required
@@ -210,7 +210,7 @@ function Page() {
                   </tr>
 
                   <tr>
-                    <td> Product Description</td>
+                    <td> Event Description</td>
                     <td>
                       <textarea
                         type="text"

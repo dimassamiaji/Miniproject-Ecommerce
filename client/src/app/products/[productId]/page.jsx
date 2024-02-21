@@ -4,16 +4,16 @@ import NavbarComponent from "@/components/navbar";
 import { axiosInstanceSSR } from "@/axios/axios";
 
 export const metadata = {
-  title: "Kickavenue - Product Detail",
-  description: "tempat jualan sepatu",
+  title: "Gotix - Event Detail",
+  description: "tempat jualan tiket",
 };
 
 async function Page({ params }) {
-  const { productId } = params;
+  const { eventtId } = params;
 
-  const product = (await axiosInstanceSSR().get("/products/" + productId)).data
+  const event = (await axiosInstanceSSR().get("/events/" + productId)).data
     .result;
-  console.log(product);
+  console.log(event);
   return (
     <>
       <NavbarComponent />
@@ -27,11 +27,11 @@ async function Page({ params }) {
             />
           </div>
           <div className=" pt-10 flex flex-col gap-5  w-9/12">
-            <div className=" font-bold text-3xl">{product.product_name}</div>
+            <div className=" font-bold text-3xl">{event.eventName}</div>
             <div className="my-2">
               <div>start from</div>
               <div className="font-bold text-3xl">
-                IDR {Number(product?.price).toLocaleString("id-ID")}
+                IDR {Number(event?.price).toLocaleString("id-ID")}
               </div>
             </div>
 
@@ -62,7 +62,7 @@ async function Page({ params }) {
               earum architecto nisi tempore, consectetur autem porro
               exercitationem soluta, corrupti dicta corporis similique
               repellendus quibusdam. */}
-              {product.description ||
+              {event.description ||
                 "We thoroughly check every purchase you make and applies our company's guarantee to the product's legitimacy. The guarantee is valid for 2 days after receiving the product from the delivery service. Should you have any concern about the product you purchase, kindly reach out to our Customer Service and Specialist on Monday - Saturday 10.00 - 21.00 (GMT+7 / WIB).\n"}
             </div>
           </div>
