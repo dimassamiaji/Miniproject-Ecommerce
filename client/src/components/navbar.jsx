@@ -18,7 +18,7 @@ function NavbarComponent() {
 
   return (
     <div
-      className={`flex justify-between py-5 px-5 border-gray-400 items-center m-auto  max-w-screen-2xl w-full  sticky top-0 bg-white`}
+      className={`flex justify-between py-5 px-5 border-gray-400 items-center m-auto  max-w-screen-xl w-full  sticky top-0 bg-white`}
     >
       {/* logo */}
       <Link className="font-bold text-xl" href={"/"}>
@@ -33,7 +33,7 @@ function NavbarComponent() {
       {/* menus */}
       <div className="flex gap-4 text-sm font-semibold text-[#737373] items-center">
         <Link href={"/"}>Find Events</Link>
-        <Link href={"/"}>Create Events</Link>
+        <Link href={"/admin/dashboard"}>Create Events</Link>
         <Link href={"/"}>Help Center</Link>
       </div>
 
