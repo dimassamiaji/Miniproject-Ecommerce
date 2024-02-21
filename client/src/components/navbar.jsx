@@ -33,7 +33,7 @@ function NavbarComponent() {
       {/* menus */}
       <div className="flex gap-4 text-sm font-semibold text-[#737373] items-center">
         <Link href={"/"}>Find Events</Link>
-        <Link href={"/"}>Create Events</Link>
+        <Link href={"/admin/dashboard"}>Create Events</Link>
         <Link href={"/"}>Help Center</Link>
       </div>
 

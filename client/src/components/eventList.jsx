@@ -15,7 +15,7 @@ function EventListComponent() {
 
   const fetchEvents = () => {
     axiosInstance()
-      .get("/products/", {
+      .get("/events/", {
         params: {
           eventName: search,
         },
