@@ -44,7 +44,7 @@ function NavbarComponent() {
             <FiShoppingCart />
           </div>
           <div>
-            Welcome, {userSelector?.first_name + " " + userSelector?.last_name}
+            Welcome, {userSelector?.firstName + " " + userSelector?.lastName}
           </div>
           <button
             className="rounded-md border-gray-500 border  px-2"
