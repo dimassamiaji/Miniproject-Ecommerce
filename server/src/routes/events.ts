@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { eventController } from "../controllers/events";
-import { verifyAdmin, verifyUser } from "../middlewares/auth-middlewares";
+import { verifyAdmin, verifyUser } from "../middlewares/auth-middleware";
 import { fileUploader } from "../middlewares/multer";
 export const route: Router = express.Router();
 route.get("/", eventController.getEvents);
