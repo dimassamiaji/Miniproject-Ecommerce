@@ -1,20 +1,22 @@
 /** @format */
 
-import { Request, Response, NextFunction } from "express";
+import { Response, Request, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 import { prisma, secretKey } from "..";
+import { Prisma } from "@prisma/client";
+
+export type TUser = {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  role: string;
+};
 
 export interface ReqUser extends Request {
   user?: TUser;
 }
-
-type TUser = {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-};
 
 export const verifyUser = async (
   req: ReqUser,
@@ -22,23 +24,33 @@ export const verifyUser = async (
   next: NextFunction
 ) => {
   try {
+    // const token = req.header("Authorization")?.replace("Bearer ", "");
     const token = req.headers.authorization;
-    if (!token) throw Error("token not found");
-    const userToken = verify(token, String(secretKey)) as TUser;
-    const checkUser = (await prisma.user.findUnique({
-      select: {
-        id: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        role: true,
-      },
-      where: {
-        email: userToken.email,
-      },
-    })) as unknown as TUser;
+    if (!token) throw Error("unauthorized");
 
-    req.user = checkUser as TUser;
+    const verifyToken = verify(String(token), secretKey) as TUser;
+
+    const user = (await prisma.user.findUnique({
+      where: {
+        email: verifyToken?.email,
+      },
+    })) as TUser;
+    if (!user.id) throw Error("not found");
+    req.user = user as TUser;
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const verifyAdmin = async (
+  req: ReqUser,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { user } = req;
+    if (user?.role !== "admin") throw Error("admin only");
     next();
   } catch (error) {
     next(error);
