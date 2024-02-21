@@ -40,7 +40,7 @@ export default function ProtectedPage({ children }) {
     else
       setTimeout(() => {
         setIsLoading(false);
-      }, 500);
+      }, 1000);
   }, [children, userSelector.id]);
 
   return <div>{isLoading ? <LoadingPage /> : children}</div>;

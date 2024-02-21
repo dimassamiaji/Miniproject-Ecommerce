@@ -12,7 +12,7 @@ function AuthProvider({ children }) {
     dispatch(keepLogin());
     setTimeout(() => {
       setIsLoading(false);
-    }, 500);
+    }, 1000);
   }, []);
   return <div>{isLoading ? <></> : children}</div>;
 }
