@@ -51,7 +51,7 @@ function EventListComponent() {
         </div>
       </div>
 
-      <div className="grid max-w-screen-2xl w-full grid-cols-4 p-7 gap-3 ">
+      <div className="grid max-w-screen-2xl w-full grid-cols-3 p-7 gap-3 ">
         {ps?.map((event, key) => (
           <EventCard {...event} key={key} />
         ))}
@@ -62,18 +62,19 @@ function EventListComponent() {
 
 export default EventListComponent;
 
-export function ProductCard({ image_url, eventName, id, price }) {
+export function EventCard({ image_url, eventName, id, price, location }) {
   return (
     <Link className="flex flex-col" href={"/events/" + id}>
       <img
-        src={process.env.API_URL + image_url}
-        className=" max-h-[154px] h-full max-w-[212px] w-full"
+        src={image_url}
+        className=" max-h-[154px] h-full max-w-[212px] w-full "
         alt=""
       />
       <div className="p-5 w-full h-full flex flex-col justify-between gap-2 ">
         <div className=" font-bold w-full "> {eventName}</div>
+        <div className=" w-full "> {location}</div>
 
-        <div className="text-[#249C58] font-semibold  ">
+        <div className="text-[#249C58] font-semibold ">
           IDR {Number(price).toLocaleString()}
         </div>
       </div>
