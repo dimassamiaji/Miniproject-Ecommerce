@@ -6,9 +6,10 @@ function CartComponent({ qty, event }) {
     <tr className="text-center ">
       <td>
         <img
+          // src={process.env.API_URL + event.image_url}
           src={process.env.API_URL + event.image_url}
           alt=""
-          className="   w-48 h-[136px] object-cover"
+          className="w-48 h-[136px] object-cover"
         />
       </td>
 

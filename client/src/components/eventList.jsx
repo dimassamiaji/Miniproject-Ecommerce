@@ -62,7 +62,7 @@ function EventListComponent() {
 
 export default EventListComponent;
 
-export function ProductCard({ image_url, eventName, id, price }) {
+export function EventCard({ image_url, eventName, id, price }) {
   return (
     <Link className="flex flex-col" href={"/events/" + id}>
       <img
