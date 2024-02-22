@@ -39,9 +39,9 @@ function Page() {
     formik.setFieldValue("id", event.id);
     formik.setFieldValue("eventName", event.eventName);
     formik.setFieldValue("image_url", event.image_url);
-
     formik.setFieldValue("price", event.price);
     formik.setFieldValue("description", event.description);
+    formik.setFieldValue("Date", event.Date);
   };
   const save = () => {
     console.log(formik.values);
@@ -51,6 +51,7 @@ function Page() {
     form.append("image", formik.values.image);
     form.append("price", formik.values.price);
     form.append("description", formik.values.description);
+    form.append("Date", formik.values.Date);
 
     if (formik.values.id) {
       axiosInstance()
@@ -104,10 +105,10 @@ function Page() {
   const renderFile = (e) => {
     console.log(e.target.files[0]);
     formik.setFieldValue("image", e.target.files[0]);
-    // formik.setFieldValue(
-    //   "image_url",
-    //   window.URL.createObjectURL(e.target.files[0])
-    // );
+    formik.setFieldValue(
+      "image_url",
+      window.URL.createObjectURL(e.target.files[0])
+    );
   };
 
   useEffect(() => {
@@ -219,6 +220,33 @@ function Page() {
                         required
                         value={formik.values.description}
                         id="description"
+                        onChange={formik.handleChange}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td> Event Location</td>
+                    <td>
+                      <textarea
+                        type="text"
+                        placeholder="Location"
+                        className="border p-1 w-96"
+                        required
+                        value={formik.values.location}
+                        id="location"
+                        onChange={formik.handleChange}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td> Event Date</td>
+                    <td>
+                      <input
+                        type="date"
+                        className="border p-1 w-96"
+                        required
+                        value={formik.values.date}
+                        id="date"
                         onChange={formik.handleChange}
                       />
                     </td>

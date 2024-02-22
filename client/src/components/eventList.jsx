@@ -62,7 +62,7 @@ function EventListComponent() {
 
 export default EventListComponent;
 
-export function EventCard({ image_url, eventName, id, price, location }) {
+export function EventCard({ image_url, eventName, id, price, location, Date }) {
   return (
     <Link className="flex flex-col" href={"/events/" + id}>
       <img
@@ -73,7 +73,8 @@ export function EventCard({ image_url, eventName, id, price, location }) {
       />
       <div className="p-5 w-full h-full flex flex-col justify-between gap-2 ">
         <div className=" font-bold w-full "> {eventName}</div>
-        <div className=" w-full "> {location}</div>
+        <div className=""> {location}</div>
+        <div className=""> {Date}</div>
 
         <div className="text-[#249C58] font-semibold  ">
           IDR {Number(price).toLocaleString()}

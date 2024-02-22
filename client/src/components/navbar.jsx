@@ -83,7 +83,7 @@ export function NavbarAdminComponent() {
       <div className="flex justify-around  py-5  border-gray-400 items-center m-auto  max-w-screen-2xl w-full   bg-white">
         {/* logo */}
         <Link className="font-bold text-xl" href={"/admin"}>
-          Admin Dashboard
+          Organizer Dashboard
         </Link>
 
         {/* login and register */}
@@ -103,11 +103,11 @@ export function NavbarAdminComponent() {
         ) : (
           <div className="flex gap-1 text-sm text-[#23A6F0] font-semibold items-center">
             <Image src={UserIcon}></Image>
-            <Link className="" href={"/login"}>
+            <Link className="" href={"/auth/login"}>
               Login
             </Link>
             /
-            <Link className=" " href={"/register"}>
+            <Link className=" " href={"/auth/register"}>
               Register
             </Link>
           </div>

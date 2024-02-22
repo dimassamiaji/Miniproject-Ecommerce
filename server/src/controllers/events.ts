@@ -101,13 +101,14 @@ export const eventController = {
   },
   async addEvent(req: ReqUser, res: Response, next: NextFunction) {
     try {
-      const { eventName, description, price, location } = req.body;
+      const { eventName, description, price, location, Date } = req.body;
       const newEvent: Prisma.EventCreateInput = {
         eventName,
         image_url: req.file?.filename,
-        price,
+        price: Number(price),
         description,
-        location: location,
+        location,
+        Date: new Date(Date),
         user: {
           connect: {
             id: req.user?.id,

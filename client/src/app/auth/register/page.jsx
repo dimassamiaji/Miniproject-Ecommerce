@@ -15,25 +15,32 @@ function Page() {
 
   const formik = useFormik({
     initialValues: {
-      first_name: "",
-      last_name: "",
+      firstName: "",
+      lastName: "",
       gender: "male",
       email: "",
       password: "",
+      phoneNumber: "",
+      referralCode: "",
     },
     validationSchema: Yup.object().shape({
-      first_name: Yup.string().required(),
+      firstName: Yup.string().required(),
       email: Yup.string().required().email("bukan email"),
       password: Yup.string().required().min(5),
+      phoneNumber: Yup.string()
+        .required()
+        .min(10)
+        .matches(/^\d+$/, "Invalid phone number"),
+      referralCode: Yup.string(),
     }),
     onSubmit: () => {
-      mendaftar();
+      signup();
     },
   });
-  const mendaftar = () => {
+  const signup = () => {
     const user = formik.values;
     console.log(user);
-    if (user.email && user.first_name && user.last_name && user.password) {
+    if (user.email && user.firstName && user.lastName && user.password) {
       axiosInstance()
         .post("/users", user)
         .then((res) => {
@@ -58,8 +65,8 @@ function Page() {
           className="w-full h-full object-cover"
         />
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
-        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10">
-          <div className="flex flex-col max-w-[440px] p-3">
+        <div className="absolute top-0 left-0 w-full h-auto flex justify-center items-center z-10">
+          <div className="flex flex-col  max-w-[440px] p-3">
             <h1 className="text-3xl font-semibold text-white">
               Create New Account
             </h1>
@@ -69,24 +76,22 @@ function Page() {
               className="p-2 bg-[#F3F4F6] rounded-lg"
               placeholder="First name"
               onChange={(e) =>
-                formik.setFieldValue("first_name", e.target.value)
+                formik.setFieldValue("firstName", e.target.value)
               }
-              id="first_name"
-              value={formik.values.first_name}
+              id="firstName"
+              value={formik.values.firstName}
             />
-            <div className="my-1 text-red-500">{formik.errors.first_name}</div>
+            <div className="my-1 text-red-500">{formik.errors.firstName}</div>
 
             <div className="font-bold mt-5 text-white">Last Name</div>
             <input
               className="p-2 bg-[#F3F4F6] rounded-lg"
               placeholder="Last name"
-              onChange={(e) =>
-                formik.setFieldValue("last_name", e.target.value)
-              }
+              onChange={(e) => formik.setFieldValue("lastName", e.target.value)}
               id="last_name"
-              value={formik.values.last_name}
+              value={formik.values.lastName}
             />
-            <div className="my-1 text-red-500">{formik.errors.last_name}</div>
+            <div className="my-1 text-red-500">{formik.errors.lastName}</div>
 
             <div className="font-bold mt-5 text-white">Email</div>
             <input
@@ -99,7 +104,7 @@ function Page() {
             />
             <div className="my-1 text-red-500">{formik.errors.email}</div>
 
-            <div className="font-bold mt-5 text-white">Kata Sandi</div>
+            <div className="font-bold mt-5 text-white">Password</div>
             <input
               type="password"
               placeholder="***********"
@@ -123,6 +128,28 @@ function Page() {
               </option>
             </select>
             <div className="my-1 text-red-500">{formik.errors.gender}</div>
+
+            <div className="font-bold mt-5 text-white">Phone Number</div>
+            <input
+              className="p-2 bg-[#F3F4F6] rounded-lg"
+              placeholder="Phone number"
+              onChange={formik.handleChange}
+              id="phoneNumber"
+              value={formik.values.phoneNumber}
+            />
+            <div className="my-1 text-red-500">{formik.errors.phoneNumber}</div>
+
+            <div className="font-bold mt-5 text-white">Referral Code</div>
+            <input
+              className="p-2 bg-[#F3F4F6] rounded-lg"
+              placeholder="Referral code"
+              onChange={formik.handleChange}
+              id="referralCode"
+              value={formik.values.referralCode}
+            />
+            <div className="my-1 text-red-500">
+              {formik.errors.referralCode}
+            </div>
 
             <p className="mt-5 text-white text-[13px]">
               Dengan mendaftar, saya menyetujui Syarat dan Ketentuan serta
