@@ -26,7 +26,7 @@ export const userController = {
         lastName,
         gender,
         phoneNumber,
-        referralCode,
+        // referralCode,
       } = req.body;
       const salt = await genSalt(10);
 
@@ -39,7 +39,7 @@ export const userController = {
         lastName,
         gender,
         phoneNumber,
-        referralCode,
+        // referralCode,
       };
 
       const checkUser = await prisma.user.findUnique({

@@ -62,11 +62,13 @@ export const eventController = {
   },
   async editEvent(req: Request, res: Response, next: NextFunction) {
     try {
-      const { eventName, image_url, price, description } = req.body;
+      const { eventName, image_url, price, description, location } = req.body;
       const editEvent: Prisma.EventUpdateInput = {
         eventName,
-        price,
+        image_url: req.file?.filename,
+        price: Number(price),
         description,
+        location,
       };
       console.log(req.file);
 
@@ -101,7 +103,7 @@ export const eventController = {
   },
   async addEvent(req: ReqUser, res: Response, next: NextFunction) {
     try {
-      const { eventName, description, price, location, Date } = req.body;
+      const { eventName, description, price, location, Date, stock } = req.body;
       const newEvent: Prisma.EventCreateInput = {
         eventName,
         image_url: req.file?.filename,
