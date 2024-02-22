@@ -9,9 +9,9 @@ export const metadata = {
 };
 
 async function Page({ params }) {
-  const { eventtId } = params;
+  const { eventId } = params;
 
-  const event = (await axiosInstanceSSR().get("/events/" + productId)).data
+  const event = (await axiosInstanceSSR().get("/events/" + eventId)).data
     .result;
   console.log(event);
   return (
@@ -22,7 +22,7 @@ async function Page({ params }) {
           <div className="m-auto">
             <img
               className=" max-w-[734px]  max-h-[523px]"
-              src={process.env.API_URL + product.image_url}
+              src={event.image_url}
               alt=""
             />
           </div>
