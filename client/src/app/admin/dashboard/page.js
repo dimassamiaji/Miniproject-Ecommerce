@@ -44,7 +44,7 @@ function Page() {
     formik.setFieldValue("price", event.price);
     formik.setFieldValue("description", event.description);
     formik.setFieldValue("location", event.location);
-    formik.setFieldValue("Date", event.Date);
+    formik.setFieldValue("eventDate", event.eventDate);
   };
   const save = () => {
     console.log(formik.values);
@@ -55,7 +55,7 @@ function Page() {
     form.append("price", formik.values.price);
     form.append("description", formik.values.description);
     form.append("location", formik.values.location);
-    form.append("Date", formik.values.Date);
+    form.append("eventDate", formik.values.eventDate);
 
     if (formik.values.id) {
       axiosInstance()

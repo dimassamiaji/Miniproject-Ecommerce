@@ -60,11 +60,14 @@ export const eventController = {
   },
   async editEvent(req: Request, res: Response, next: NextFunction) {
     try {
-      const { eventName, image_url, price, description } = req.body;
+      const { eventName, image_url, price, description, location, Date } =
+        req.body;
       const editEvent: Prisma.EventUpdateInput = {
         eventName,
         price,
         description,
+        location,
+        Date: new Date(),
       };
       console.log(req.file);
 
@@ -107,7 +110,7 @@ export const eventController = {
         image_url: req.file?.filename,
         price,
         description,
-        location,
+        location: location,
         Date: new Date(),
         user: {
           connect: {
