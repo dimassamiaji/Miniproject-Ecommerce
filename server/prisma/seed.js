@@ -15,7 +15,7 @@ const data = [
     phoneNumber: "081298807077",
     referralCode: "",
     id: 1,
-    role: "customer",
+    role: "user",
   },
   {
     email: "dimas@mail.com",
@@ -26,7 +26,7 @@ const data = [
     phoneNumber: "081298807077",
     referralCode: "",
     id: 2,
-    role: "customer",
+    role: "user",
   },
   {
     email: "admin@mail.com",

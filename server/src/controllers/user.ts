@@ -1,4 +1,3 @@
-/** @format */
 import { Response, Request, NextFunction } from "express";
 import { prisma, secretKey } from ".."; //accessing model
 import { Prisma } from "@prisma/client"; // accessing interface/types
@@ -26,7 +25,7 @@ export const userController = {
         lastName,
         gender,
         phoneNumber,
-        // referralCode,
+        referralCode,
       } = req.body;
       const salt = await genSalt(10);
 
@@ -39,7 +38,7 @@ export const userController = {
         lastName,
         gender,
         phoneNumber,
-        // referralCode,
+        referralCode,
       };
 
       const checkUser = await prisma.user.findUnique({

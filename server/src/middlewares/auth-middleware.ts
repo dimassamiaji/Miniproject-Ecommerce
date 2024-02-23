@@ -1,5 +1,3 @@
-/** @format */
-
 import { Response, Request, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 import { prisma, secretKey } from "..";
@@ -50,7 +48,7 @@ export const verifyAdmin = async (
 ) => {
   try {
     const { user } = req;
-    if (user?.role !== "organizer") throw Error("organizer only");
+    if (user?.role !== "admin") throw Error("admin only");
     next();
   } catch (error) {
     next(error);

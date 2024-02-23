@@ -17,7 +17,7 @@ enum Gender {
 }
 
 enum Role {
-  customer
+  user
   organizer
 }
 
@@ -32,7 +32,7 @@ model User {
   lastName String
   email String @unique
   password String
-  role Role? @default(customer)
+  role Role? @default(user)
   gender Gender? 
   referralCode String @default(uuid())
   phoneNumber String
@@ -130,7 +130,6 @@ model Point {
   expiredAt DateTime @default(now())
   user User @relation(fields: [userId], references: [id])
 }
-
 
 model Review {
   id Int @id @default(autoincrement())

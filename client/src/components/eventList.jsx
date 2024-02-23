@@ -11,7 +11,7 @@ function EventListComponent() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [eventsPerPage] = useState(6); // Jumlah event per halaman
+  const [eventsPerPage] = useState(4); // Jumlah event per halaman
 
   const [value] = useDebounce(search, 500);
 

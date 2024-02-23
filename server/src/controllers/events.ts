@@ -1,5 +1,3 @@
-/** @format */
-
 import { Response, Request, NextFunction } from "express";
 import { prisma } from "..";
 import { Prisma } from "@prisma/client";
@@ -62,13 +60,11 @@ export const eventController = {
   },
   async editEvent(req: Request, res: Response, next: NextFunction) {
     try {
-      const { eventName, image_url, price, description, location } = req.body;
+      const { eventName, image_url, price, description } = req.body;
       const editEvent: Prisma.EventUpdateInput = {
         eventName,
-        image_url: req.file?.filename,
-        price: Number(price),
+        price,
         description,
-        location,
       };
       console.log(req.file);
 
@@ -103,14 +99,13 @@ export const eventController = {
   },
   async addEvent(req: ReqUser, res: Response, next: NextFunction) {
     try {
-      const { eventName, description, price, location, Date, stock } = req.body;
+      const { eventName, description, price, location } = req.body;
       const newEvent: Prisma.EventCreateInput = {
         eventName,
         image_url: req.file?.filename,
-        price: Number(price),
+        price,
         description,
-        location,
-        Date: new Date(Date),
+        location: location,
         user: {
           connect: {
             id: req.user?.id,

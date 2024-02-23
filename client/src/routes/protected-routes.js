@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { redirect } from "next/navigation";
 import LoadingPage from "@/components/loading";
 
-const customerOnly = "customerOnly";
+const userOnly = "userOnly";
 const needLogin = "needLogin";
 const organizerOnly = "organizerOnly";
 
@@ -20,8 +20,8 @@ class Route {
 
 const routes = [];
 routes.push(new Route("/"));
-routes.push(new Route("/auth/login", customerOnly));
-routes.push(new Route("/auth/register", customerOnly));
+routes.push(new Route("/auth/login", userOnly));
+routes.push(new Route("/auth/register", userOnly));
 routes.push(new Route("/organizer/dashboard", organizerOnly));
 
 export default function ProtectedPage({ children }) {
@@ -35,7 +35,7 @@ export default function ProtectedPage({ children }) {
       return redirect("/auth/login");
     else if (checkRoute?.type == needLogin && !userSelector.email)
       return redirect("/auth/login");
-    else if (checkRoute?.type == customerOnly && userSelector.email)
+    else if (checkRoute?.type == userOnly && userSelector.email)
       return redirect("/");
     else
       setTimeout(() => {
