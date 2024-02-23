@@ -22,6 +22,8 @@ function Page() {
     description: "",
     image_url: "",
     image: null,
+    Date: new Date(),
+    location,
     id: 0,
   };
 
@@ -41,6 +43,7 @@ function Page() {
     formik.setFieldValue("image_url", event.image_url);
     formik.setFieldValue("price", event.price);
     formik.setFieldValue("description", event.description);
+    formik.setFieldValue("location", event.location);
     formik.setFieldValue("Date", event.Date);
   };
   const save = () => {
@@ -51,6 +54,7 @@ function Page() {
     form.append("image", formik.values.image);
     form.append("price", formik.values.price);
     form.append("description", formik.values.description);
+    form.append("location", formik.values.location);
     form.append("Date", formik.values.Date);
 
     if (formik.values.id) {
@@ -242,11 +246,11 @@ function Page() {
                     <td> Event Date</td>
                     <td>
                       <input
-                        type="date"
+                        type="Date"
                         className="border p-1 w-96"
                         required
-                        value={formik.values.date}
-                        id="date"
+                        value={formik.values.Date}
+                        id="Date"
                         onChange={formik.handleChange}
                       />
                     </td>

@@ -22,7 +22,7 @@ const routes = [];
 routes.push(new Route("/"));
 routes.push(new Route("/auth/login", userOnly));
 routes.push(new Route("/auth/register", userOnly));
-routes.push(new Route("/organizer/dashboard", organizerOnly));
+routes.push(new Route("/admin/dashboard", organizerOnly));
 
 export default function ProtectedPage({ children }) {
   const userSelector = useSelector((state) => state.auth);
