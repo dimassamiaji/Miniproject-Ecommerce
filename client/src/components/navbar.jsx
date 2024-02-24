@@ -8,7 +8,7 @@ import UserIcon from "../assets/user.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Logo from "../assets/Logo-edit2.png";
+import Logo from "../assets/Logo-gotix.png";
 function NavbarComponent() {
   const userSelector = useSelector((state) => state.auth);
   const dispatch = useDispatch();

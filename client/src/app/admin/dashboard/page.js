@@ -22,7 +22,7 @@ function Page() {
     description: "",
     image_url: "",
     image: null,
-    Date: new Date(),
+    eventDate: new Date(),
     location,
     id: 0,
   };
@@ -229,19 +229,26 @@ function Page() {
                     </td>
                   </tr>
                   <tr>
-                    <td> Event Location</td>
+                    <td>Event Location</td>
                     <td>
-                      <textarea
-                        type="text"
-                        placeholder="Location"
+                      <select
                         className="border p-1 w-96"
                         required
                         value={formik.values.location}
                         id="location"
                         onChange={formik.handleChange}
-                      />
+                      >
+                        <option value="">Select Location</option>
+                        <option value="Location1">Jakarta</option>
+                        <option value="Location2">Bandung</option>
+                        <option value="Location3">BSD</option>
+                        <option value="Location3">Bali</option>
+                        <option value="Location3">Bandung</option>
+                        <option value="Location3">Surabaya</option>
+                      </select>
                     </td>
                   </tr>
+
                   <tr>
                     <td> Event Date</td>
                     <td>
@@ -249,8 +256,8 @@ function Page() {
                         type="Date"
                         className="border p-1 w-96"
                         required
-                        value={formik.values.Date}
-                        id="Date"
+                        value={formik.values.eventDate}
+                        id="eventDate"
                         onChange={formik.handleChange}
                       />
                     </td>

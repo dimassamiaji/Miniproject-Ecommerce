@@ -3,6 +3,7 @@
 import NavbarComponent from "@/components/navbar";
 import EventListComponent from "@/components/eventList";
 import SliderComponent from "@/components/slider";
+import VideoSliderComponent from "@/components/slider";
 
 export const metadata = {
   title: "Gotix - Home",
@@ -14,7 +15,8 @@ export default function Home() {
     <>
       <NavbarComponent />
       <div className="flex flex-col justify-center max-w-screen-2xl w-full items-center m-auto">
-        <SliderComponent />
+        {/* <SliderComponent /> */}
+        <VideoSliderComponent />
         <EventListComponent />
       </div>
     </>

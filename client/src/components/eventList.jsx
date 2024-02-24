@@ -111,7 +111,7 @@ function EventListComponent() {
         </div>
       </div>
 
-      <div className="grid max-w-screen-2xl w-full grid-cols-4 p-7 gap-3 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 ">
         {currentEvents.map((event, key) => (
           <EventCard {...event} key={key} />
         ))}
@@ -140,23 +140,38 @@ function EventListComponent() {
 
 export default EventListComponent;
 
+const formatDate = (dateString) => {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
 export function EventCard({ image_url, eventName, id, price, location, Date }) {
   return (
-    <Link className="flex flex-col" href={"/events/" + id}>
+    <Link
+      className="bg-white rounded-lg overflow-hidden shadow-md"
+      href={"/events/" + id}
+    >
       <img
         src={image_url}
-        className=" max-h-[154px] h-full max-w-[212px] w-full"
-        alt=""
+        className=" max-h-[384px] h-full max-w-[384px] w-full"
+        alt={eventName}
+        width={300}
+        height={200}
+        objectFit="cover"
       />
-      <div className="p-5 w-full h-full flex flex-col justify-between gap-2 ">
-        <div className=" font-bold w-full "> {eventName}</div>
-        <div className=""> {location}</div>
-        <div className=""> {Date}</div>
-
-        <div className="text-[#249C58] font-semibold  ">
+      <div className="p-4">
+        <h2 className="text-xl font-bold mb-2">{eventName}</h2>
+        <p className="text-gray-600 mb-2">
+          {location} | {formatDate(Date)}
+        </p>
+        <p className="text-gray-600 mb-4">
           IDR {Number(price).toLocaleString()}
-        </div>
+        </p>
+        <button className="bg-blue-500 text-white w-full px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+          Buy Tickets
+        </button>
       </div>
+        
     </Link>
   );
 }
