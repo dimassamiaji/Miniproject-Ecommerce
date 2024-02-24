@@ -141,7 +141,6 @@ function Page() {
           <table className="w-full">
             <tr className=" text-center ">
               <th>IMAGE</th>
-
               <th>EVENT NAME</th>
               <th>PRICE</th>
             </tr>
@@ -239,12 +238,11 @@ function Page() {
                         onChange={formik.handleChange}
                       >
                         <option value="">Select Location</option>
-                        <option value="Location1">Jakarta</option>
-                        <option value="Location2">Bandung</option>
-                        <option value="Location3">BSD</option>
-                        <option value="Location3">Bali</option>
-                        <option value="Location3">Bandung</option>
-                        <option value="Location3">Surabaya</option>
+                        <option value="Jakarta">Jakarta</option>
+                        <option value="Bandung">Bandung</option>
+                        <option value="BSD">BSD</option>
+                        <option value="Bali">Bali</option>
+                        <option value="Surabaya">Surabaya</option>
                       </select>
                     </td>
                   </tr>

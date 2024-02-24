@@ -10,7 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import BackgroundImage from "../../../assets/imaginedragons.jpg";
 
-function Page() {
+function RegisterPage() {
   YupPassword(Yup);
 
   const formik = useFormik({
@@ -57,120 +57,126 @@ function Page() {
   }, [formik.values]);
 
   return (
-    <>
-      <div className="relative">
-        <Image
-          src={BackgroundImage}
-          alt="background"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
-        <div className="absolute top-0 left-0 w-full h-auto flex justify-center items-center z-10">
-          <div className="flex flex-col  max-w-[440px] p-3">
-            <h1 className="text-3xl font-semibold text-white">
-              Create New Account
-            </h1>
-
-            <div className="font-bold mt-5 text-white">First Name</div>
+    <div className="relative min-h-screen flex items-center justify-center">
+      <Image
+        src={BackgroundImage}
+        alt="background"
+        layout="fill"
+        objectFit="cover"
+        className="absolute"
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-60" />
+      <div className="z-10 p-8 bg-white bg-opacity-90 rounded-2xl shadow-xl max-w-md w-full">
+        <h1 className="text-3xl font-bold text-center mb-6">
+          Create New Account
+        </h1>
+        <form onSubmit={formik.handleSubmit} className="space-y-6">
+          {/* ... input fields ... */}
+          <div className="flex flex-col space-y-4">
             <input
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="First name"
-              onChange={(e) =>
-                formik.setFieldValue("firstName", e.target.value)
-              }
               id="firstName"
+              name="firstName"
+              type="text"
+              onChange={formik.handleChange}
               value={formik.values.firstName}
+              placeholder="First Name"
+              className="w-full px-4 py-1 border border-gray-300 rounded-md"
             />
             <div className="my-1 text-red-500">{formik.errors.firstName}</div>
 
-            <div className="font-bold mt-5 text-white">Last Name</div>
             <input
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="Last name"
-              onChange={(e) => formik.setFieldValue("lastName", e.target.value)}
-              id="last_name"
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
               value={formik.values.lastName}
+              placeholder="Last Name"
+              className="w-full px-4 py-1 border border-gray-300 rounded-md"
             />
+
             <div className="my-1 text-red-500">{formik.errors.lastName}</div>
 
-            <div className="font-bold mt-5 text-white">Email</div>
             <input
-              type="email"
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="user@mail.com"
-              onChange={formik.handleChange}
               id="email"
+              name="email"
+              type="email"
+              onChange={formik.handleChange}
               value={formik.values.email}
+              placeholder="Email"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
+
             <div className="my-1 text-red-500">{formik.errors.email}</div>
 
-            <div className="font-bold mt-5 text-white">Password</div>
             <input
-              type="password"
-              placeholder="***********"
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              onChange={formik.handleChange}
               id="password"
+              name="password"
+              type="password"
+              onChange={formik.handleChange}
               value={formik.values.password}
+              placeholder="Password"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
+
             <div className="my-1 text-red-500">{formik.errors.password}</div>
 
-            <div className="font-bold mt-5 text-white">Gender</div>
             <select
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              onChange={(e) => formik.setFieldValue("gender", e.target.value)}
+              id="gender"
+              name="gender"
+              onChange={formik.handleChange}
+              value={formik.values.gender}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-white"
             >
-              <option value="male" className=" text-black">
-                Male
-              </option>
-              <option value="female" className=" text-black">
-                Female
-              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
+
             <div className="my-1 text-red-500">{formik.errors.gender}</div>
 
-            <div className="font-bold mt-5 text-white">Phone Number</div>
             <input
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="Phone number"
-              onChange={formik.handleChange}
               id="phoneNumber"
+              name="phoneNumber"
+              type="text"
+              onChange={formik.handleChange}
               value={formik.values.phoneNumber}
+              placeholder="Phone Number"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
+
             <div className="my-1 text-red-500">{formik.errors.phoneNumber}</div>
 
-            <div className="font-bold mt-5 text-white">Referral Code</div>
             <input
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="Referral code"
-              onChange={formik.handleChange}
               id="referralCode"
+              name="referralCode"
+              type="text"
+              onChange={formik.handleChange}
               value={formik.values.referralCode}
+              placeholder="Referral Code"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
+
             <div className="my-1 text-red-500">
               {formik.errors.referralCode}
             </div>
-
-            <p className="mt-5 text-white text-[13px]">
-              Dengan mendaftar, saya menyetujui Syarat dan Ketentuan serta
-              Kebijakan Privasi
-            </p>
-            <div className="mt-4 text-xs text-white">
-              Already have an account?{" "}
-              <Link href="/auth/login" className="text-[#4F46E5] font-bold">
-                Login
-              </Link>
-            </div>
-            <button
-              className="rounded-lg mt-3 text-white bg-[#4F46E5] h-10"
-              onClick={formik.handleSubmit}
-            >
-              Sign Up
-            </button>
           </div>
-        </div>
+          <button
+            type="submit"
+            className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Sign Up
+          </button>
+        </form>
+        <p className="mt-4 text-center text-sm">
+          Already have an account?{" "}
+          <Link href="/auth/login">
+            <span className="text-blue-600 hover:underline cursor-pointer">
+              Log in
+            </span>
+          </Link>
+        </p>
       </div>
-    </>
+    </div>
   );
 }
-export default Page;
+
+export default RegisterPage;

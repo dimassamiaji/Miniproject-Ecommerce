@@ -77,36 +77,42 @@ function EventListComponent() {
           />
         </div>
         {/* Filter Button */}
-        <div className="flex justify-center mt-5 space-x-4">
-          <button onClick={() => handleFilter("All")} className="btn-filter">
+        <div className="flex flex-wrap justify-center mt-5 gap-2 md:gap-4">
+          <button
+            onClick={() => handleFilter("All")}
+            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+          >
             All
           </button>
           <button
             onClick={() => handleFilter("Jakarta")}
-            className="btn-filter"
+            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
           >
             Jakarta
           </button>
-          <button onClick={() => handleFilter("Bali")} className="btn-filter">
+          <button
+            onClick={() => handleFilter("Bandung")}
+            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+          >
+            Bandung
+          </button>
+          <button
+            onClick={() => handleFilter("BSD")}
+            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+          >
+            BSD
+          </button>
+          <button
+            onClick={() => handleFilter("Bali")}
+            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+          >
             Bali
           </button>
           <button
-            onClick={() => handleFilter("Semarang")}
-            className="btn-filter"
+            onClick={() => handleFilter("Surabaya")}
+            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
           >
-            Semarang
-          </button>
-          <button
-            onClick={() => handleFilter("Palembang")}
-            className="btn-filter"
-          >
-            Palembang
-          </button>
-          <button
-            onClick={() => handleFilter("Boyolali")}
-            className="btn-filter"
-          >
-            Boyolali
+            Surabaya
           </button>
         </div>
       </div>
@@ -145,7 +151,14 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-export function EventCard({ image_url, eventName, id, price, location, Date }) {
+export function EventCard({
+  image_url,
+  eventName,
+  id,
+  price,
+  location,
+  eventDate,
+}) {
   return (
     <Link
       className="bg-white rounded-lg overflow-hidden shadow-md"
@@ -162,7 +175,7 @@ export function EventCard({ image_url, eventName, id, price, location, Date }) {
       <div className="p-4">
         <h2 className="text-xl font-bold mb-2">{eventName}</h2>
         <p className="text-gray-600 mb-2">
-          {location} | {formatDate(Date)}
+          {location} | {formatDate(eventDate)}
         </p>
         <p className="text-gray-600 mb-4">
           IDR {Number(price).toLocaleString()}

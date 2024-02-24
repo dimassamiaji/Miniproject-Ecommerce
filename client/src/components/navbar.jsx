@@ -82,7 +82,7 @@ export function NavbarAdminComponent() {
     <div className="sticky top-0">
       <div className="flex justify-around  py-5  border-gray-400 items-center m-auto  max-w-screen-2xl w-full   bg-white">
         {/* logo */}
-        <Link className="font-bold text-xl" href={"/admin"}>
+        <Link className="font-bold text-xl" href={"/admin/dashboard"}>
           Organizer Dashboard
         </Link>
 
