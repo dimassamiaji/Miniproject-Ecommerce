@@ -34,6 +34,7 @@ model User {
   password String
   role Role? @default(user)
   gender Gender? 
+  avatarUrl String? @db.VarChar(255)
   isVerified Boolean @default(false)
   referralCode String @default(uuid())
   phoneNumber String

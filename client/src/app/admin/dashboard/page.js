@@ -123,8 +123,8 @@ function Page() {
   return (
     <>
       <NavbarAdminComponent />
-      <div className="w-full">
-        <div className="flex flex-col justify-center  max-w-[1000px] w-full items-center m-auto  ">
+      <div className="  ">
+        <div className="flex flex-col justify-center max-w-[1000px] w-full items-center m-auto  ">
           <div className="py-5 w-full">
             <div className="flex px-3 items-center gap-3  border-gray-300 border-b w-72  p-2">
               <img src={Search} alt="" className=" w-3 h-3" />

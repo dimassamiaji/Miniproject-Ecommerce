@@ -14,6 +14,8 @@ const data = [
     gender: "male",
     phoneNumber: "081298807077",
     referralCode: "",
+    avatarUrl:
+      "https://imgsrv2.voi.id/WjEqMKzrXoQQvMyNmpfJrb69U5WO2jgd1eqrHg-lOyA/auto/1200/675/sm/1/bG9jYWw6Ly8vcHVibGlzaGVycy8zNDMxMTEvMjAyMzEyMjkxMzI1LW1haW4uY3JvcHBlZF8xNzAzODM0OTI5LmpwZWc.jpg",
     id: 1,
     role: "user",
   },
@@ -25,6 +27,8 @@ const data = [
     gender: "male",
     phoneNumber: "081298807077",
     referralCode: "",
+    avatarUrl:
+      "https://imgsrv2.voi.id/WjEqMKzrXoQQvMyNmpfJrb69U5WO2jgd1eqrHg-lOyA/auto/1200/675/sm/1/bG9jYWw6Ly8vcHVibGlzaGVycy8zNDMxMTEvMjAyMzEyMjkxMzI1LW1haW4uY3JvcHBlZF8xNzAzODM0OTI5LmpwZWc.jpg",
     id: 2,
     role: "user",
   },

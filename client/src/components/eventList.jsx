@@ -80,37 +80,37 @@ function EventListComponent() {
         <div className="flex flex-wrap justify-center mt-5 gap-2 md:gap-4">
           <button
             onClick={() => handleFilter("All")}
-            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+            className="hover:underline hover:text-[#23A6F0] btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
           >
             All
           </button>
           <button
             onClick={() => handleFilter("Jakarta")}
-            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+            className="hover:underline hover:text-[#23A6F0] btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
           >
             Jakarta
           </button>
           <button
             onClick={() => handleFilter("Bandung")}
-            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+            className="hover:underline hover:text-[#23A6F0] btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
           >
             Bandung
           </button>
           <button
             onClick={() => handleFilter("BSD")}
-            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+            className="hover:underline hover:text-[#23A6F0] btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
           >
             BSD
           </button>
           <button
             onClick={() => handleFilter("Bali")}
-            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+            className="hover:underline hover:text-[#23A6F0] btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
           >
             Bali
           </button>
           <button
             onClick={() => handleFilter("Surabaya")}
-            className="btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
+            className="hover:underline hover:text-[#23A6F0] btn-filter px-2 py-1 text-xs md:text-sm md:px-4"
           >
             Surabaya
           </button>
@@ -132,7 +132,7 @@ function EventListComponent() {
               <li
                 key={i}
                 onClick={() => paginate(i + 1)}
-                className="cursor-pointer"
+                className="hover:underline hover:text-[#23A6F0] cursor-pointer"
               >
                 {i + 1}
               </li>

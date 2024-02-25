@@ -17,11 +17,11 @@ async function Page({ params }) {
   return (
     <>
       <NavbarComponent />
-      <div className="flex flex-col justify-center max-w-screen-2xl w-full items-center m-auto ">
-        <div className="grid max-w-screen-2xl  md:grid-cols-2 p-7 gap-3 w-full  sm:grid-cols-1">
+      <div className="flex flex-col justify-center max-w-screen-2xl w-full items-center m-auto pt-[60px]">
+        <div className="grid max-w-screen-2xl md:grid-cols-2 p-7 gap-3 w-full sm:grid-cols-1">
           <div className="m-auto">
             <img
-              className=" max-w-[734px]  max-h-[523px]"
+              className=" max-w-[600px]  max-h-[523px]"
               src={event.image_url}
               alt=""
             />

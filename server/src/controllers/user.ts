@@ -83,6 +83,7 @@ export const userController = {
         lastName: user.lastName,
         gender: user.gender,
         role: user.role,
+        avatarUrl: String(req.file?.filename),
       };
       if (checkPassword) {
         const token = sign(resUser, secretKey, {
