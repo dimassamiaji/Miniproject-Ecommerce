@@ -17,7 +17,7 @@ function LoadingPage() {
         `}
       </style>
       <div className="flex w-screen h-screen justify-center items-center">
-        <Image src={Logo} />
+        <Image src={Logo} className=" w-[440px]" />
       </div>
     </>
   );

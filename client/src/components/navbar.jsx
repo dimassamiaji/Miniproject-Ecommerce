@@ -39,15 +39,17 @@ function NavbarComponent() {
 
       {/* login and register */}
       {userSelector?.id ? (
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
           <div className="flex items-center cursor-pointer">
             <FiShoppingCart />
           </div>
-          <div>
-            Welcome, {userSelector?.firstName + " " + userSelector?.lastName}
-          </div>
+          <Link href="/profile">
+            <span className="text-sm text-[#23A6F0] font-semibold cursor-pointer">
+              Welcome, {userSelector?.firstName + " " + userSelector?.lastName}
+            </span>
+          </Link>
           <button
-            className="rounded-md border-gray-500 border  px-2"
+            className="rounded-md border-gray-500 border px-2"
             onClick={logout}
           >
             Logout
