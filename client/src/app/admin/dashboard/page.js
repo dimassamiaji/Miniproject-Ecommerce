@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import { axiosInstance } from "@/axios/axios";
 import AdminEventCard from "@/components/admin/adminCard";
 import { useDebounce } from "use-debounce";
+import moment from "moment";
 
 /** @format */
 function Page() {
@@ -251,10 +252,12 @@ function Page() {
                     <td> Event Date</td>
                     <td>
                       <input
-                        type="Date"
+                        type="date"
                         className="border p-1 w-96"
                         required
-                        value={formik.values.eventDate}
+                        value={moment(formik.values.eventDate).format(
+                          "YYYY-MM-DD"
+                        )}
                         id="eventDate"
                         onChange={formik.handleChange}
                       />

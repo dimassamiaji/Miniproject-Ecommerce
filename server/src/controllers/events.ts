@@ -67,9 +67,12 @@ export const eventController = {
         price,
         description,
         location,
-        eventDate: new Date(),
+        eventDate: new Date(eventDate),
       };
-      console.log(req.file);
+
+      if (req.file?.filename)
+        (editEvent.image_url = String(req.file?.filename)),
+          console.log(req.file);
 
       await prisma.event.update({
         data: editEvent,
@@ -111,7 +114,7 @@ export const eventController = {
         price,
         description,
         location: location,
-        eventDate: new Date(),
+        eventDate: new Date(eventDate),
         user: {
           connect: {
             id: req.user?.id,

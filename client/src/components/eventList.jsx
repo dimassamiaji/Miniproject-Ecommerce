@@ -5,6 +5,7 @@ import Search from "../assets/search.png";
 import Link from "next/link";
 import Image from "next/image";
 import { useDebounce } from "use-debounce";
+import moment from "moment";
 
 function EventListComponent() {
   const [search, setSearch] = useState("");
@@ -146,11 +147,6 @@ function EventListComponent() {
 
 export default EventListComponent;
 
-const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(dateString).toLocaleDateString(undefined, options);
-};
-
 export function EventCard({
   image_url,
   eventName,
@@ -165,7 +161,8 @@ export function EventCard({
       href={"/events/" + id}
     >
       <img
-        src={image_url}
+        src={process.env.API_URL + image_url}
+        // src={image_url}
         className=" max-h-[384px] h-full max-w-[384px] w-full"
         alt={eventName}
         width={300}
@@ -175,7 +172,7 @@ export function EventCard({
       <div className="p-4">
         <h2 className="text-xl font-bold mb-2">{eventName}</h2>
         <p className="text-gray-600 mb-2">
-          {location} | {formatDate(eventDate)}
+          {location} | {moment(eventDate).format("YYYY-MM-DD")}
         </p>
         <p className="text-gray-600 mb-4">
           IDR {Number(price).toLocaleString()}

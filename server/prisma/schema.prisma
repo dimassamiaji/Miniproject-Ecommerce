@@ -54,7 +54,7 @@ model Event {
   eventName String
   description String @db.Text
   price Decimal @db.Decimal(18,2)
-  eventDate DateTime @default(now())
+  eventDate DateTime
   location String
   image_url String? @db.VarChar(255)
   userId Int
