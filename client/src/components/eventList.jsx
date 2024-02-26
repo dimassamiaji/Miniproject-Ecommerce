@@ -63,6 +63,18 @@ function EventListComponent() {
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
+
+  // Define the Previous and Next page functions
+  const goToPreviousPage = () =>
+    setCurrentPage((currentPage) => Math.max(1, currentPage - 1));
+  const goToNextPage = () =>
+    setCurrentPage((currentPage) => Math.min(totalPages, currentPage + 1));
+
+  // Check if we are on the first or last page
+  const onFirstPage = currentPage === 1;
+  const onLastPage = currentPage === totalPages;
 
   return (
     <div className="w-full">
@@ -125,21 +137,43 @@ function EventListComponent() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center">
-        <ul className="flex gap-2">
-          {Array.from(
-            { length: Math.ceil(filteredEvents.length / eventsPerPage) },
-            (_, i) => (
-              <li
-                key={i}
-                onClick={() => paginate(i + 1)}
-                className="hover:underline hover:text-[#23A6F0] cursor-pointer"
-              >
-                {i + 1}
-              </li>
-            )
-          )}
-        </ul>
+      <div className="flex justify-center mt-8">
+        {/* Previous Button */}
+        <button
+          disabled={onFirstPage}
+          onClick={goToPreviousPage}
+          className={`px-6 py-2 mx-1 rounded-md text-sm font-medium ${
+            onFirstPage ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"
+          }`}
+        >
+          Previous
+        </button>
+
+        {/* Page Number Buttons */}
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => paginate(i + 1)}
+            className={`px-4 py-2 mx-1 rounded-md text-sm font-medium ${
+              currentPage === i + 1
+                ? "bg-blue-500 text-white"
+                : "hover:bg-gray-100"
+            }`}
+          >
+            {i + 1}
+          </button>
+        ))}
+
+        {/* Next Button */}
+        <button
+          disabled={onLastPage}
+          onClick={goToNextPage}
+          className={`px-6 py-2 mx-1 rounded-md text-sm font-medium ${
+            onLastPage ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"
+          }`}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

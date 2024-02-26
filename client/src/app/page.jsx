@@ -4,6 +4,7 @@ import NavbarComponent from "@/components/navbar";
 import EventListComponent from "@/components/eventList";
 import SliderComponent from "@/components/slider";
 import VideoSliderComponent from "@/components/slider";
+import Footer from "@/components/footer";
 
 export const metadata = {
   title: "Gotix - Home",
@@ -18,6 +19,7 @@ export default function Home() {
         {/* <SliderComponent /> */}
         <VideoSliderComponent />
         <EventListComponent />
+        {/* <Footer /> */}
       </div>
     </>
   );

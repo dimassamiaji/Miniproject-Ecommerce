@@ -17,6 +17,8 @@ function Page() {
   const [value] = useDebounce(search, 500);
 
   const [events, setEvents] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
   const initalEvent = {
     eventName: "",
     price: 0,
