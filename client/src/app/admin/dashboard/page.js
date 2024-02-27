@@ -10,6 +10,7 @@ import { useDebounce } from "use-debounce";
 import moment from "moment";
 
 /** @format */
+
 function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
 
@@ -45,6 +46,20 @@ function Page() {
     indexOfFirstEvent,
     indexOfLastEvent
   );
+
+  const totalPages = Math.ceil(events.length / eventsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Define the Previous and Next page functions
+  const goToPreviousPage = () =>
+    setCurrentPage((currentPage) => Math.max(1, currentPage - 1));
+  const goToNextPage = () =>
+    setCurrentPage((currentPage) => Math.min(totalPages, currentPage + 1));
+
+  // Check if we are on the first or last page
+  const onFirstPage = currentPage === 1;
+  const onLastPage = currentPage === totalPages;
 
   // Memfilter events berdasarkan pencarian
   useEffect(() => {
@@ -148,11 +163,11 @@ function Page() {
   };
 
   const hapus = (id) => {
-    if (window.confirm("apakah anda yakin menghapus event id " + id + "?"))
+    if (window.confirm("are you sure to delete the event id " + id + "?"))
       axiosInstance()
         .delete("/events/" + id)
         .then(() => {
-          alert(`id ${id} berhasil dihapus`);
+          alert(`id ${id} deleted successfully`);
           fetchEvents();
         })
         .catch((err) => console.log(err));
@@ -183,20 +198,6 @@ function Page() {
   useEffect(() => {
     fetchEvents();
   }, [value, currentPage]);
-
-  const totalPages = Math.ceil(events.length / eventsPerPage);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // Define the Previous and Next page functions
-  const goToPreviousPage = () =>
-    setCurrentPage((currentPage) => Math.max(1, currentPage - 1));
-  const goToNextPage = () =>
-    setCurrentPage((currentPage) => Math.min(totalPages, currentPage + 1));
-
-  // Check if we are on the first or last page
-  const onFirstPage = currentPage === 1;
-  const onLastPage = currentPage === totalPages;
 
   const upload = useRef(null);
   return (

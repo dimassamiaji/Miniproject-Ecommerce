@@ -25,7 +25,7 @@ function RegisterPage() {
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required(),
-      email: Yup.string().required().email("bukan email"),
+      email: Yup.string().required().email("not an email"),
       password: Yup.string().required().min(5),
       phoneNumber: Yup.string()
         .required()
@@ -45,7 +45,7 @@ function RegisterPage() {
         .post("/users", user)
         .then((res) => {
           formik.resetForm();
-          alert("register berhasil");
+          alert("registration successful");
           redirect("/login");
         })
         .catch((err) => console.log(err));

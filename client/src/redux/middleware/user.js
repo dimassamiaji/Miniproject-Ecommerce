@@ -13,7 +13,7 @@ export const userLogin = ({ email, password }) => {
       if (res.data.result?.id) {
         const { firstName } = res.data.result;
 
-        alert("welcome " + firstName);
+        alert("Welcome " + firstName);
         dispatch(functionLogin(res.data.result));
 
         localStorage.setItem("user", res.data.token);
@@ -21,7 +21,7 @@ export const userLogin = ({ email, password }) => {
       return;
     } catch (err) {
       localStorage.removeItem("auth");
-      alert("wrong email/password ");
+      alert("Wrong email/password ");
 
       return err.message;
     }
