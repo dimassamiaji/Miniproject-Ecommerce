@@ -197,7 +197,7 @@ export function EventCard({
       <img
         src={process.env.API_URL + image_url}
         // src={image_url}
-        className=" max-h-[384px] h-full max-w-[384px] w-full"
+        className=" max-h-[200px] h-full max-w-[300px] w-full"
         alt={eventName}
         width={300}
         height={200}
