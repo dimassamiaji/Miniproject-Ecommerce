@@ -204,6 +204,9 @@ function Page() {
       <NavbarAdminComponent />
       <div className="flex flex-col justify-center max-w-[1000px] w-full items-center m-auto  ">
         <div className="py-5 w-full">
+          <h1 className=" font-bold text-center text-2xl p-3">
+            Organizer Dashboard
+          </h1>
           <div className="flex px-3 items-center gap-3  border-gray-300 border-b w-72  p-2">
             <input
               type="text"
