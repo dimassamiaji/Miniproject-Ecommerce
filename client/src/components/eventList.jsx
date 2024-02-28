@@ -191,7 +191,7 @@ export function EventCard({
 }) {
   return (
     <Link
-      className="bg-white rounded-lg overflow-hidden shadow-md my-4"
+      className="bg-white rounded-lg overflow-hidden shadow-md my"
       href={"/events/" + id}
     >
       <img
