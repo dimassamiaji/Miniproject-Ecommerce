@@ -130,14 +130,14 @@ function EventListComponent() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-46 ">
         {currentEvents.map((event, key) => (
           <EventCard {...event} key={key} />
         ))}
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-2 mb-3">
         {/* Previous Button */}
         <button
           disabled={onFirstPage}
@@ -197,7 +197,7 @@ export function EventCard({
       <img
         src={process.env.API_URL + image_url}
         // src={image_url}
-        className=" max-h-[200px] h-full max-w-[300px] w-full"
+        className=" max-h-[384px] h-full max-w-[384px] w-full"
         alt={eventName}
         width={300}
         height={200}
