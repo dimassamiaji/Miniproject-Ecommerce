@@ -2,7 +2,7 @@
 
 import NavbarComponent from "@/components/navbar";
 import { axiosInstanceSSR } from "@/axios/axios";
-
+import React from "react";
 
 export const metadata = {
   title: "Gotix - Event Detail",
@@ -82,21 +82,4 @@ async function Page({ params }) {
 }
 export default Page;
 
-// pages/events/[eventid].jsx
-// ... other imports like components
 
-// export const EventTransactionPage = () => {
-//   const router = useRouter();
-//   const { eventId } = router.query; // This is how you can access the event ID
-
-//   // You can now use eventid to fetch event details or handle transactions
-
-//   return (
-//     <div className="container mx-auto p-4">
-//       <h1 className="text-2xl font-bold">
-//         Transaction for Event ID: {eventId}
-//       </h1>
-//       {/* ... rest of your transaction page content */}
-//     </div>
-//   );
-// };
