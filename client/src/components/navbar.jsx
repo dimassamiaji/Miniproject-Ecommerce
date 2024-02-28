@@ -56,14 +56,14 @@ function NavbarComponent() {
 
         {/* menus */}
         <ul style={{ color: `${textColor}` }} className="hidden sm:flex">
-          <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
+          {/* <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
             <Link href="/">Find Events</Link>
-          </li>
+          </li> */}
           <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
             <Link href="/admin/dashboard">Create Events</Link>
           </li>
           <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
-            <Link href="/">Help Events</Link>
+            <Link href="/">Transaction</Link>
           </li>
         </ul>
 
@@ -138,7 +138,7 @@ function NavbarComponent() {
               <Link href="/admin/dashboard">Create Events</Link>
             </li>
             <li className="hover:underline p-4 text-4xl hover:text-gray-500">
-              <Link href="/">Help Events</Link>
+              <Link href="/">Transaction</Link>
             </li>
           </ul>
         </div>

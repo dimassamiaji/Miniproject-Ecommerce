@@ -53,10 +53,12 @@ async function Page({ params }) {
                 required
                 id="qty"
               ></input>
+
               <button
                 type="submit"
                 className="h-[49px] border w-[168px] rounded-lg text-white bg-black hover:bg-white border-black hover:text-black"
               >
+
                 Buy
               </button>
             </form>
@@ -81,5 +83,3 @@ async function Page({ params }) {
   );
 }
 export default Page;
-
-
