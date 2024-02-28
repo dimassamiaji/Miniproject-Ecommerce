@@ -11,6 +11,11 @@ export const metadata = {
 async function Page({ params }) {
   const { eventId } = params;
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const event = (await axiosInstanceSSR().get("/events/" + eventId)).data
     .result;
   console.log(event);
@@ -22,7 +27,7 @@ async function Page({ params }) {
           <div className="m-auto">
             <img
               className=" max-w-[600px]  max-h-[523px]"
-              src={event.image_url}
+              src={process.env.API_URL + event.image_url}
               alt=""
             />
           </div>
@@ -33,6 +38,8 @@ async function Page({ params }) {
               <div className="font-bold text-3xl">
                 IDR {Number(event?.price).toLocaleString("id-ID")}
               </div>
+              <div className="">Location Concert in {event.location}</div>
+              <div className="">{formatDate(event.eventDate)}</div>
             </div>
 
             <form action="" className="flex gap-3" id="form">
@@ -52,10 +59,10 @@ async function Page({ params }) {
               </button>
             </form>
             <div className="font-semibold">
-              Please Make Sure The Size Fits You
+              Please Make Sure Your Ticket Before Buy
             </div>
             <hr />
-            <div className="font-semibold">Authentic. Guarateed.</div>
+            <div className="font-semibold text-center">About This Event</div>
 
             <div className=" text-justify text-sm">
               {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
