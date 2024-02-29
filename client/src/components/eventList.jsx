@@ -215,7 +215,6 @@ export function EventCard({
           Buy Tickets
         </button>
       </div>
-        
     </Link>
   );
 }
