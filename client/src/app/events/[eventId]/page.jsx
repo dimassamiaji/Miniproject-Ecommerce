@@ -3,6 +3,7 @@
 import NavbarComponent from "@/components/navbar";
 import { axiosInstanceSSR } from "@/axios/axios";
 import React from "react";
+import Link from "next/link";
 
 export const metadata = {
   title: "Gotix - Event Detail",
@@ -23,6 +24,7 @@ async function Page({ params }) {
   return (
     <>
       <NavbarComponent />
+
       <div className="flex flex-col justify-center max-w-screen-2xl w-full items-center m-auto pt-[60px]">
         <div className="grid max-w-screen-2xl md:grid-cols-2 p-7 gap-3 w-full sm:grid-cols-1">
           <div className="m-auto">
@@ -54,13 +56,12 @@ async function Page({ params }) {
                 id="qty"
               ></input>
 
-              <button
-                type="submit"
-                className="h-[49px] border w-[168px] rounded-lg text-white bg-black hover:bg-white border-black hover:text-black"
+              <Link
+                href={"/transaction/" + eventId}
+                className="h-[49px] border w-[130px] p-3 rounded-lg text-white bg-black hover:bg-white border-black hover:text-black text-center"
               >
-
                 Buy
-              </button>
+              </Link>
             </form>
             <div className="font-semibold">
               Please Make Sure Your Ticket Before Buy

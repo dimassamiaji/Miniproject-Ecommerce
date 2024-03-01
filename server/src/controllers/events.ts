@@ -82,7 +82,7 @@ export const eventController = {
       });
       res.send({
         success: true,
-        message: "data berhasil diedit",
+        message: "data edited successfully",
       });
     } catch (error) {
       next(error);
@@ -97,7 +97,7 @@ export const eventController = {
       });
       res.send({
         success: true,
-        message: "data berhasil dihapus",
+        message: "data deleted successfully",
       });
     } catch (error) {
       next(error);
@@ -126,7 +126,7 @@ export const eventController = {
       });
       res.send({
         success: true,
-        message: "data berhasil ditambahkan",
+        message: "data added successfully",
       });
     } catch (error) {
       next(error);

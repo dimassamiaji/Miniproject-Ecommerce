@@ -8,7 +8,7 @@ function AdminEventCard({ eventName, price, image_url, edit, hapus }) {
           src={process.env.API_URL + image_url}
           // src={image_url}
           alt=""
-          className=" justify-center items-center w-24"
+          className="justify-center items-center w-20"
         />
       </td>
 

@@ -12,7 +12,7 @@ function EventListComponent() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [eventsPerPage] = useState(4); // Jumlah event per halaman
+  const [eventsPerPage] = useState(4);
 
   const [value] = useDebounce(search, 500);
 
@@ -45,7 +45,6 @@ function EventListComponent() {
       .catch((err) => console.log(err));
   };
 
-  // Memfilter events berdasarkan pencarian
   useEffect(() => {
     setFilteredEvents(
       events.filter((event) =>
@@ -54,7 +53,6 @@ function EventListComponent() {
     );
   }, [search, events]);
 
-  // Mendapatkan events untuk halaman yang sedang aktif
   const indexOfLastEvent = currentPage * eventsPerPage;
   const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
   const currentEvents = filteredEvents.slice(
@@ -72,7 +70,6 @@ function EventListComponent() {
   const goToNextPage = () =>
     setCurrentPage((currentPage) => Math.min(totalPages, currentPage + 1));
 
-  // Check if we are on the first or last page
   const onFirstPage = currentPage === 1;
   const onLastPage = currentPage === totalPages;
 
@@ -89,7 +86,7 @@ function EventListComponent() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        {/* Filter Button */}
+
         <div className="flex flex-wrap justify-center mt-5 gap-2 md:gap-4">
           <button
             onClick={() => handleFilter("All")}
@@ -136,9 +133,7 @@ function EventListComponent() {
         ))}
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-center mt-2 mb-3">
-        {/* Previous Button */}
         <button
           disabled={onFirstPage}
           onClick={goToPreviousPage}
@@ -149,7 +144,6 @@ function EventListComponent() {
           Previous
         </button>
 
-        {/* Page Number Buttons */}
         {Array.from({ length: totalPages }, (_, i) => (
           <button
             key={i}
@@ -164,7 +158,6 @@ function EventListComponent() {
           </button>
         ))}
 
-        {/* Next Button */}
         <button
           disabled={onLastPage}
           onClick={goToNextPage}
@@ -191,20 +184,17 @@ export function EventCard({
 }) {
   return (
     <Link
-      className="bg-white rounded-lg overflow-hidden shadow-md my-2"
+      className="bg-white rounded-lg overflow-hidden shadow-md my-4"
       href={"/events/" + id}
     >
       <img
         src={process.env.API_URL + image_url}
-        // src={image_url}
-        className=" max-h-[384px] h-full max-w-[384px] w-full"
+        className=" max-h-[384px] h-80 max-w-[384px] w-full"
         alt={eventName}
-        width={300}
-        height={200}
         objectFit="cover"
       />
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-2">{eventName}</h2>
+      <div className="p-4 mb-2">
+        <h2 className="text-xl font-bold mb-2 my-2">{eventName}</h2>
         <p className="text-gray-600 mb-2">
           {location} | {moment(eventDate).format("YYYY-MM-DD")}
         </p>
