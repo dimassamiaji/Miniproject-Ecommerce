@@ -62,9 +62,9 @@ function NavbarComponent() {
           <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
             <Link href="/admin/dashboard">Create Events</Link>
           </li>
-          <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
+          {/* <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
             <Link href="/">Transaction</Link>
-          </li>
+          </li> */}
         </ul>
 
         {/* login and register */}
@@ -126,20 +126,20 @@ function NavbarComponent() {
         <div
           className={
             nav
-              ? "sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300"
-              : "sm:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-full h-screen bg-black text-center ease-in duration-300"
+              ? "sm:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-white text-center ease-in duration-300"
+              : "sm:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-full h-screen bg-white text-center ease-in duration-300"
           }
         >
           <ul>
-            <li className="hover:underline p-4 text-4xl hover:text-gray-500">
+            {/* <li className="hover:underline p-4 text-4xl hover:text-gray-500">
               <Link href="/">Find Events</Link>
-            </li>
+            </li> */}
             <li className="hover:underline p-4 text-4xl hover:text-gray-500">
               <Link href="/admin/dashboard">Create Events</Link>
             </li>
-            <li className="hover:underline p-4 text-4xl hover:text-gray-500">
+            {/* <li className="hover:underline p-4 text-4xl hover:text-gray-500">
               <Link href="/">Transaction</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
