@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 import { prisma, secretKey } from "..";
-import { Prisma } from "@prisma/client";
+// import { Prisma } from "@prisma/client";
 
 export type TUser = {
   id: number;
