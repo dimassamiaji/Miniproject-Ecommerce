@@ -10,35 +10,42 @@ import Link from "next/link";
 import Image from "next/image";
 import BackgroundImage from "../../../assets/imaginedragons.jpg";
 
-function Page() {
+function RegisterPage() {
   YupPassword(Yup);
 
   const formik = useFormik({
     initialValues: {
-      first_name: "",
-      last_name: "",
+      firstName: "",
+      lastName: "",
       gender: "male",
       email: "",
       password: "",
+      phoneNumber: "",
+      referralCode: "",
     },
     validationSchema: Yup.object().shape({
-      first_name: Yup.string().required(),
-      email: Yup.string().required().email("bukan email"),
+      firstName: Yup.string().required(),
+      email: Yup.string().required().email("not an email"),
       password: Yup.string().required().min(5),
+      phoneNumber: Yup.string()
+        .required()
+        .min(10)
+        .matches(/^\d+$/, "Invalid phone number"),
+      referralCode: Yup.string(),
     }),
     onSubmit: () => {
-      mendaftar();
+      signup();
     },
   });
-  const mendaftar = () => {
+  const signup = () => {
     const user = formik.values;
     console.log(user);
-    if (user.email && user.first_name && user.last_name && user.password) {
+    if (user.email && user.firstName && user.lastName && user.password) {
       axiosInstance()
         .post("/users", user)
         .then((res) => {
           formik.resetForm();
-          alert("register berhasil");
+          alert("registration successful");
           redirect("/login");
         })
         .catch((err) => console.log(err));
@@ -50,100 +57,126 @@ function Page() {
   }, [formik.values]);
 
   return (
-    <>
-      <div className="relative">
-        <Image
-          src={BackgroundImage}
-          alt="background"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
-        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10">
-          <div className="flex flex-col max-w-[440px] p-3">
-            <h1 className="text-3xl font-semibold text-white">
-              Create New Account
-            </h1>
-
-            <div className="font-bold mt-5 text-white">First Name</div>
+    <div className="relative min-h-screen flex items-center justify-center">
+      <Image
+        src={BackgroundImage}
+        alt="background"
+        layout="fill"
+        objectFit="cover"
+        className="absolute"
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-60" />
+      <div className="z-10 p-8 bg-white bg-opacity-90 rounded-2xl shadow-xl max-w-md w-full">
+        <h1 className="text-3xl font-bold text-center mb-6">
+          Create New Account
+        </h1>
+        <form onSubmit={formik.handleSubmit} className="space-y-6">
+          {/* ... input fields ... */}
+          <div className="flex flex-col space-y-4">
             <input
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="First name"
-              onChange={(e) =>
-                formik.setFieldValue("first_name", e.target.value)
-              }
-              id="first_name"
-              value={formik.values.first_name}
-            />
-            <div className="my-1 text-red-500">{formik.errors.first_name}</div>
-
-            <div className="font-bold mt-5 text-white">Last Name</div>
-            <input
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="Last name"
-              onChange={(e) =>
-                formik.setFieldValue("last_name", e.target.value)
-              }
-              id="last_name"
-              value={formik.values.last_name}
-            />
-            <div className="my-1 text-red-500">{formik.errors.last_name}</div>
-
-            <div className="font-bold mt-5 text-white">Email</div>
-            <input
-              type="email"
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="user@mail.com"
+              id="firstName"
+              name="firstName"
+              type="text"
               onChange={formik.handleChange}
-              id="email"
-              value={formik.values.email}
+              value={formik.values.firstName}
+              placeholder="First Name"
+              className="w-full px-4 py-1 border border-gray-300 rounded-md"
             />
+            <div className="my-1 text-red-500">{formik.errors.firstName}</div>
+
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+              placeholder="Last Name"
+              className="w-full px-4 py-1 border border-gray-300 rounded-md"
+            />
+
+            <div className="my-1 text-red-500">{formik.errors.lastName}</div>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              placeholder="Email"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            />
+
             <div className="my-1 text-red-500">{formik.errors.email}</div>
 
-            <div className="font-bold mt-5 text-white">Kata Sandi</div>
             <input
-              type="password"
-              placeholder="***********"
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              onChange={formik.handleChange}
               id="password"
+              name="password"
+              type="password"
+              onChange={formik.handleChange}
               value={formik.values.password}
+              placeholder="Password"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
+
             <div className="my-1 text-red-500">{formik.errors.password}</div>
 
-            <div className="font-bold mt-5 text-white">Gender</div>
             <select
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              onChange={(e) => formik.setFieldValue("gender", e.target.value)}
+              id="gender"
+              name="gender"
+              onChange={formik.handleChange}
+              value={formik.values.gender}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-white"
             >
-              <option value="male" className=" text-black">
-                Male
-              </option>
-              <option value="female" className=" text-black">
-                Female
-              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
+
             <div className="my-1 text-red-500">{formik.errors.gender}</div>
 
-            <p className="mt-5 text-white text-[13px]">
-              Dengan mendaftar, saya menyetujui Syarat dan Ketentuan serta
-              Kebijakan Privasi
-            </p>
-            <div className="mt-4 text-xs text-white">
-              Already have an account?{" "}
-              <Link href="/auth/login" className="text-[#4F46E5] font-bold">
-                Login
-              </Link>
+            <input
+              id="phoneNumber"
+              name="phoneNumber"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.phoneNumber}
+              placeholder="Phone Number"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            />
+
+            <div className="my-1 text-red-500">{formik.errors.phoneNumber}</div>
+
+            <input
+              id="referralCode"
+              name="referralCode"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.referralCode}
+              placeholder="Referral Code"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            />
+
+            <div className="my-1 text-red-500">
+              {formik.errors.referralCode}
             </div>
-            <button
-              className="rounded-lg mt-3 text-white bg-[#4F46E5] h-10"
-              onClick={formik.handleSubmit}
-            >
-              Sign Up
-            </button>
           </div>
-        </div>
+          <button
+            type="submit"
+            className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Sign Up
+          </button>
+        </form>
+        <p className="mt-4 text-center text-sm">
+          Already have an account?{" "}
+          <Link href="/auth/login">
+            <span className="text-blue-600 hover:underline cursor-pointer">
+              Log in
+            </span>
+          </Link>
+        </p>
       </div>
-    </>
+    </div>
   );
 }
-export default Page;
+
+export default RegisterPage;

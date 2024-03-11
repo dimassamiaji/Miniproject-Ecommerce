@@ -1,5 +1,3 @@
-/** @format */
-
 import express, { Router } from "express";
 import { eventController } from "../controllers/events";
 import { verifyAdmin, verifyUser } from "../middlewares/auth-middleware";

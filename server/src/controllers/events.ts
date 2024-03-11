@@ -1,5 +1,3 @@
-/** @format */
-
 import { Response, Request, NextFunction } from "express";
 import { prisma } from "..";
 import { Prisma } from "@prisma/client";
@@ -62,13 +60,19 @@ export const eventController = {
   },
   async editEvent(req: Request, res: Response, next: NextFunction) {
     try {
-      const { eventName, image_url, price, description } = req.body;
+      const { eventName, image_url, price, description, location, eventDate } =
+        req.body;
       const editEvent: Prisma.EventUpdateInput = {
         eventName,
         price,
         description,
+        location,
+        eventDate: new Date(eventDate),
       };
-      console.log(req.file);
+
+      if (req.file?.filename)
+        (editEvent.image_url = String(req.file?.filename)),
+          console.log(req.file);
 
       await prisma.event.update({
         data: editEvent,
@@ -78,7 +82,7 @@ export const eventController = {
       });
       res.send({
         success: true,
-        message: "data berhasil diedit",
+        message: "data edited successfully",
       });
     } catch (error) {
       next(error);
@@ -93,7 +97,36 @@ export const eventController = {
       });
       res.send({
         success: true,
-        message: "data berhasil dihapus",
+        message: "data deleted successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  async addEvent(req: ReqUser, res: Response, next: NextFunction) {
+    try {
+      const { eventName, description, price, location, eventDate } = req.body;
+      console.log(req.body);
+
+      const newEvent: Prisma.EventCreateInput = {
+        eventName,
+        image_url: String(req.file?.filename),
+        price,
+        description,
+        location: location,
+        eventDate: new Date(eventDate),
+        user: {
+          connect: {
+            id: req.user?.id,
+          },
+        },
+      };
+      await prisma.event.create({
+        data: newEvent,
+      });
+      res.send({
+        success: true,
+        message: "data added successfully",
       });
     } catch (error) {
       next(error);

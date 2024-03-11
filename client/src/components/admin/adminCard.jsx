@@ -1,5 +1,5 @@
 /** @format */
-
+import moment from "moment";
 function AdminEventCard({ eventName, price, image_url, edit, hapus }) {
   return (
     <tr className="text-center">
@@ -8,11 +8,12 @@ function AdminEventCard({ eventName, price, image_url, edit, hapus }) {
           src={process.env.API_URL + image_url}
           // src={image_url}
           alt=""
-          className=" w-24 object-cover"
+          className="justify-center items-center w-20"
         />
       </td>
 
-      <td className="text-left">{eventName}</td>
+      <td className="text-center">{eventName}</td>
+      {/* <td className="text-left">{moment(eventDate).format("DD-MM-YYYY")}</td> */}
       <td className=" font-semibold">
         IDR {Number(price).toLocaleString("id-ID")}
       </td>

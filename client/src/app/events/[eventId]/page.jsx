@@ -2,6 +2,8 @@
 
 import NavbarComponent from "@/components/navbar";
 import { axiosInstanceSSR } from "@/axios/axios";
+import React from "react";
+import Link from "next/link";
 
 export const metadata = {
   title: "Gotix - Event Detail",
@@ -9,20 +11,26 @@ export const metadata = {
 };
 
 async function Page({ params }) {
-  const { eventtId } = params;
+  const { eventId } = params;
 
-  const event = (await axiosInstanceSSR().get("/events/" + productId)).data
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const event = (await axiosInstanceSSR().get("/events/" + eventId)).data
     .result;
   console.log(event);
   return (
     <>
       <NavbarComponent />
-      <div className="flex flex-col justify-center max-w-screen-2xl w-full items-center m-auto ">
-        <div className="grid max-w-screen-2xl  md:grid-cols-2 p-7 gap-3 w-full  sm:grid-cols-1">
+
+      <div className="flex flex-col justify-center max-w-screen-2xl w-full items-center m-auto pt-[60px]">
+        <div className="grid max-w-screen-2xl md:grid-cols-2 p-7 gap-3 w-full sm:grid-cols-1">
           <div className="m-auto">
             <img
-              className=" max-w-[734px]  max-h-[523px]"
-              src={process.env.API_URL + product.image_url}
+              className=" max-w-[600px]  max-h-[523px]"
+              src={process.env.API_URL + event.image_url}
               alt=""
             />
           </div>
@@ -33,6 +41,9 @@ async function Page({ params }) {
               <div className="font-bold text-3xl">
                 IDR {Number(event?.price).toLocaleString("id-ID")}
               </div>
+              <div className="my-4"></div>
+              <div className="">Location Concert in {event.location}</div>
+              <div className="">{formatDate(event.eventDate)}</div>
             </div>
 
             <form action="" className="flex gap-3" id="form">
@@ -44,18 +55,19 @@ async function Page({ params }) {
                 required
                 id="qty"
               ></input>
-              <button
-                type="submit"
-                className="h-[49px] border w-[168px] rounded-lg text-white bg-black hover:bg-white border-black hover:text-black"
+
+              <Link
+                href={"/transaction/" + eventId}
+                className="h-[49px] border w-[130px] p-3 rounded-lg text-white bg-black hover:bg-white border-black hover:text-black text-center"
               >
                 Buy
-              </button>
+              </Link>
             </form>
             <div className="font-semibold">
-              Please Make Sure The Size Fits You
+              Please Make Sure Your Ticket Before Buy
             </div>
             <hr />
-            <div className="font-semibold">Authentic. Guarateed.</div>
+            <div className="font-semibold text-center">About This Event</div>
 
             <div className=" text-justify text-sm">
               {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,

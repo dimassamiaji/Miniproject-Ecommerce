@@ -33,9 +33,10 @@
     "mustache": "^4.2.0",
     "mysql2": "^3.9.1",
     "nodemailer": "^6.9.9",
+    "prisma": "^5.9.1",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
-    "prisma": "^5.9.1"
+    "@types/mustache": "^4.2.5"
   }
 }
