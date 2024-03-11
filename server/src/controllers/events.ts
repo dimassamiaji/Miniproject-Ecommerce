@@ -132,31 +132,4 @@ export const eventController = {
       next(error);
     }
   },
-  async addEvent(req: ReqUser, res: Response, next: NextFunction) {
-    try {
-      const { eventName, description, price, location } = req.body;
-      const newEvent: Prisma.EventCreateInput = {
-        eventName,
-        image_url: req.file?.filename,
-        price,
-        description,
-        location: location,
-        user: {
-          connect: {
-            id: req.user?.id,
-          },
-        },
-      };
-
-      await prisma.event.create({
-        data: newEvent,
-      });
-      res.send({
-        success: true,
-        message: "data berhasil ditambahkan",
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
 };
