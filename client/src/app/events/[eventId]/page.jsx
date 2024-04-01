@@ -11,18 +11,23 @@ export const metadata = {
 async function Page({ params }) {
   const { eventId } = params;
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const event = (await axiosInstanceSSR().get("/events/" + eventId)).data
     .result;
   console.log(event);
   return (
     <>
       <NavbarComponent />
-      <div className="flex flex-col justify-center max-w-screen-2xl w-full items-center m-auto ">
-        <div className="grid max-w-screen-2xl  md:grid-cols-2 p-7 gap-3 w-full  sm:grid-cols-1">
+      <div className="flex flex-col justify-center max-w-screen-2xl w-full items-center m-auto pt-[60px]">
+        <div className="grid max-w-screen-2xl md:grid-cols-2 p-7 gap-3 w-full sm:grid-cols-1">
           <div className="m-auto">
             <img
-              className=" max-w-[734px]  max-h-[523px]"
-              src={event.image_url}
+              className=" max-w-[600px]  max-h-[523px]"
+              src={process.env.API_URL + event.image_url}
               alt=""
             />
           </div>
@@ -33,6 +38,9 @@ async function Page({ params }) {
               <div className="font-bold text-3xl">
                 IDR {Number(event?.price).toLocaleString("id-ID")}
               </div>
+              <div className="my-4"></div>
+              <div className="">Location Concert in {event.location}</div>
+              <div className="">{formatDate(event.eventDate)}</div>
             </div>
 
             <form action="" className="flex gap-3" id="form">
@@ -55,13 +63,9 @@ async function Page({ params }) {
               Please Make Sure Your Ticket Before Buy
             </div>
             <hr />
-            <div className="font-semibold">About This Event</div>
+            <div className="font-semibold text-center">About This Event</div>
 
             <div className=" text-justify text-sm">
-              {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              earum architecto nisi tempore, consectetur autem porro
-              exercitationem soluta, corrupti dicta corporis similique
-              repellendus quibusdam. */}
               {event.description ||
                 "We thoroughly check every purchase you make and applies our company's guarantee to the product's legitimacy. The guarantee is valid for 2 days after receiving the product from the delivery service. Should you have any concern about the product you purchase, kindly reach out to our Customer Service and Specialist on Monday - Saturday 10.00 - 21.00 (GMT+7 / WIB).\n"}
             </div>

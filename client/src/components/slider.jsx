@@ -1,14 +1,15 @@
-/** @format */
+import React from "react";
 
-import Image from "next/image";
-import Banner from "../assets/imaginedragons.jpg";
-function SliderComponent() {
+function VideoSliderComponent() {
+  const videoSrc = "/video1.mp4";
+
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full max-w-screen-2xl ">
-        <Image className="w-full" src={Banner} alt="" />
+      <div className="w-full max-w-screen-2xl">
+        <video className="w-full" src={videoSrc} alt="" controls loop />
       </div>
     </div>
   );
 }
-export default SliderComponent;
+
+export default VideoSliderComponent;

@@ -1,11 +1,11 @@
-/** @format */
 "use client";
-import { userLogin } from "@/redux/middleware/user";
-import Link from "next/link";
 import { useDispatch } from "react-redux";
-import BackgroundImage from "../../../assets/imaginedragons.jpg";
+import { userLogin } from "@/redux/middleware/user";
 import Image from "next/image";
-function Page() {
+import BackgroundImage from "../../../assets/imaginedragons.jpg"; // Pastikan path ini benar
+import Link from "next/link";
+
+function LoginPage() {
   const dispatch = useDispatch();
 
   const login = () => {
@@ -16,59 +16,54 @@ function Page() {
   };
 
   return (
-    <>
-      <div className="relative">
-        <Image
-          src={BackgroundImage}
-          alt="background"
-          className="w-full h-full object-cover"
+    <div className="relative min-h-screen flex items-center justify-center">
+      <Image
+        src={BackgroundImage}
+        alt="background"
+        layout="fill"
+        objectFit="cover"
+        className="absolute"
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-60" />
+      <div className="z-10 p-8 bg-white bg-opacity-90 rounded-2xl shadow-xl max-w-md w-full">
+        <h1 className="text-4xl font-bold mb-4 text-center">Log in</h1>
+        <input
+          id="email"
+          type="email"
+          className="w-full p-3 rounded-lg border border-gray-300 mb-4"
+          placeholder="Email"
         />
-        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
-        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10">
-          <div className="flex flex-col max-w-[440px] p-3">
-            <h1 className="text-3xl font-semibold text-white text-center">
-              Log In
-            </h1>
-            <p className="text-[15px] font-semibold text-white text-center">
-              Tidak lagi ketinggalan event dan konser musik favoritmu
-            </p>
-            <p className=" text-[13px] text-white text-center">
-              Gabung dan rasakan kemudahan bertransaksi dan mengolah event di
-              Gotix.
-            </p>
+        <input
+          id="password"
+          type="password"
+          className="w-full p-3 rounded-lg border border-gray-300 mb-4"
+          placeholder="Password"
+        />
+        <button
+          onClick={login}
+          className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold mb-2"
+        >
+          Log In
+        </button>
+        <div className="flex justify-center items-center my-4">
+          <hr className="border-gray-300 w-full" />
+          {/* <span className="px-2 text-gray-500">Atau log in dengan</span>
+          <hr className="border-gray-300 w-full" /> */}
+        </div>
 
-            <div className="font-bold mt-5 text-white">Email</div>
-            <input
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="user@mail.com"
-              id="email"
-              type="email"
-            ></input>
-
-            <div className="font-bold mt-5 text-white">Password</div>
-            <input
-              className="p-2 bg-[#F3F4F6] rounded-lg"
-              placeholder="******"
-              id="password"
-              type="password"
-            ></input>
-
-            <div className="mt-4 text-xs text-white">
-              Don't have an account?{" "}
-              <Link href="/auth/register" className="text-[#4F46E5] font-bold">
-                Register
-              </Link>
-            </div>
-            <button
-              className="rounded-lg mt-2 text-white bg-[#4F46E5] h-16"
-              onClick={login}
-            >
-              Continue
-            </button>
-          </div>
+        {/* Sisipkan ikon media sosial di sini
+        <div className="flex justify-center items-center space-x-4">
+          Sosial Media Buttons
+        </div> */}
+        <div className="mt-6 text-center text-sm">
+          Don't have an account?{" "}
+          <Link href="/auth/register">
+            <span className="text-blue-600 cursor-pointer">Register</span>
+          </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
-export default Page;
+
+export default LoginPage;

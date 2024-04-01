@@ -5,7 +5,7 @@ function AdminEventCard({ eventName, price, image_url, edit, hapus }) {
     <tr className="text-center">
       <td>
         <img
-          src={image_url}
+          src={process.env.API_URL + image_url}
           alt=""
           className=" w-24 object-cover"
         />

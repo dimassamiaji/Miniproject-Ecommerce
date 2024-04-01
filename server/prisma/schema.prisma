@@ -17,7 +17,7 @@ enum Gender {
 }
 
 enum Role {
-  customer
+  user
   organizer
 }
 
@@ -32,8 +32,10 @@ model User {
   lastName String
   email String @unique
   password String
-  role Role? @default(customer)
+  role Role? @default(user)
   gender Gender? 
+  avatarUrl String? @db.VarChar(255)
+  isVerified Boolean @default(false)
   referralCode String @default(uuid())
   phoneNumber String
   createdAt DateTime @default(now())
@@ -44,6 +46,7 @@ model User {
   categories Category[]
   points Point[]
   eventdashboards EventDashboard[]
+  coupons Coupon []
 }
 
 model Event {
@@ -51,9 +54,8 @@ model Event {
   eventName String
   description String @db.Text
   price Decimal @db.Decimal(18,2)
-  Date DateTime @default(now())
+  eventDate DateTime
   location String
-  isFree Boolean @default(false)
   image_url String? @db.VarChar(255)
   userId Int
   user   User  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -122,6 +124,21 @@ model Promotion {
   event Event @relation(fields: [eventId], references: [id])
 }
 
+model Coupon {
+  id            Int       @id @default(autoincrement())
+  code          String    @unique
+  discountValue Decimal   @db.Decimal(18,2)
+  expiryDate    DateTime
+  usageCount    Int       @default(0)
+  maxUsage      Int       @default(1)
+  isActive      Boolean   @default(true)
+  userId        Int?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  user          User?     @relation(fields: [userId], references: [id])
+}
+
+
 model Point {
   id Int @id @default(autoincrement())
   userId Int
@@ -130,7 +147,6 @@ model Point {
   expiredAt DateTime @default(now())
   user User @relation(fields: [userId], references: [id])
 }
-
 
 model Review {
   id Int @id @default(autoincrement())

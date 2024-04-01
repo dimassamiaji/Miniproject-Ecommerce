@@ -1,10 +1,28 @@
 /** @format */
 
+import Logo from "../assets/Logo-gotix.png";
+import Image from "next/image";
+
 function LoadingPage() {
   return (
-    <div className=" flex w-screen h-screen font-bold justify-center items-center text-3xl">
-      Gotix{" "}
-    </div>
+    <>
+      <style>
+        {`
+          @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+          }
+
+          .loadingText {
+            animation: fadeInOut 6s linear infinite;
+          }
+        `}
+      </style>
+      <div className="flex w-screen h-screen font-bold justify-center items-center text-3xl">
+        <Image src={Logo} />
+      </div>
+    </>
   );
 }
+
 export default LoadingPage;
