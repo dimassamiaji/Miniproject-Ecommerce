@@ -2,7 +2,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { NavbarAdminComponent } from "@/components/navbar";
-import Search from "@/assets/search.png";
 import { useFormik } from "formik";
 import { axiosInstance } from "@/axios/axios";
 import AdminEventCard from "@/components/admin/adminCard";
@@ -90,7 +89,7 @@ function Page() {
     image_url: "",
     image: null,
     eventDate: new Date(),
-    location,
+    location: "",
     id: 0,
   };
 
@@ -204,16 +203,16 @@ function Page() {
   return (
     <>
       <NavbarAdminComponent />
-      <div className="flex flex-col justify-center max-w-[1000px] w-full items-center m-auto  ">
+      <div className="flex flex-col justify-center max-w-[1000px] w-full items-center m-auto p-4">
         <div className="py-5 w-full">
-          <h1 className=" font-bold text-center text-2xl p-3">
+          <h1 className="font-bold text-center text-2xl p-3">
             Organizer Dashboard
           </h1>
-          <div className="flex px-3 items-center gap-3  border-gray-300 border-b w-72  p-2">
+          <div className="flex px-3 items-center gap-3 border-gray-300 border-b w-full md:w-72 p-2">
             <input
               type="text"
               placeholder="Type any events here"
-              className="outline-none"
+              className="outline-none w-full"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -221,22 +220,26 @@ function Page() {
         </div>
 
         <table className="w-full">
-          <tr className=" text-center ">
-            <th>IMAGE</th>
-            <th>EVENT NAME</th>
-            <th>PRICE</th>
-          </tr>
-          {currentEvents.map((event, key) => (
-            <AdminEventCard
-              {...event}
-              key={key}
-              edit={() => edit(event.id)}
-              hapus={() => hapus(event.id)}
-            />
-          ))}
+          <thead>
+            <tr className="text-center">
+              <th>IMAGE</th>
+              <th>EVENT NAME</th>
+              <th>PRICE</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentEvents.map((event, key) => (
+              <AdminEventCard
+                {...event}
+                key={key}
+                edit={() => edit(event.id)}
+                hapus={() => hapus(event.id)}
+              />
+            ))}
+          </tbody>
         </table>
         {/* Pagination */}
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-8 flex-wrap gap-2">
           {/* Previous Button */}
           <button
             disabled={onFirstPage}
@@ -300,112 +303,111 @@ function Page() {
               {selectedEvent ? "Edit Event" : "Add Event"}
             </h1>
 
-            <div className="flex flex-col gap-1 ">
-              <table>
-                <tr>
-                  <td> Event Name</td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="Event Name"
-                      className="border p-1  w-96 "
-                      required
-                      id="eventName"
-                      value={formik.values.eventName}
-                      onChange={formik.handleChange}
-                      // onChange={(e) => {
-                      //   formik.setFieldValue("product_name", e.target.value);
-                      // }}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td> Event Image</td>
-                  <td>
-                    <input
-                      type="file"
-                      placeholder="Image URL"
-                      className="border p-1  w-96 hidden"
-                      id="image_url"
-                      onChange={(e) => renderFile(e)}
-                      ref={upload}
-                    />
-                    <button
-                      className="bg-full bg-green-500 w-32 text-white rounded-md "
-                      type="button"
-                      onClick={() => {
-                        upload.current.click();
-                      }}
-                    >
-                      upload
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td> Event Price</td>
-                  <td>
-                    <input
-                      type="number"
-                      placeholder="Event Price"
-                      className="border p-1 w-96"
-                      min={50000}
-                      required
-                      id="price"
-                      value={formik.values.price}
-                      onChange={formik.handleChange}
-                    />
-                  </td>
-                </tr>
+            <div className="flex flex-col gap-1">
+              <table className="w-full">
+                <tbody>
+                  <tr>
+                    <td className="py-2"> Event Name</td>
+                    <td>
+                      <input
+                        type="text"
+                        placeholder="Event Name"
+                        className="border p-1 w-full md:w-96"
+                        required
+                        id="eventName"
+                        value={formik.values.eventName}
+                        onChange={formik.handleChange}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2"> Event Image</td>
+                    <td>
+                      <input
+                        type="file"
+                        placeholder="Image URL"
+                        className="border p-1 w-full md:w-96 hidden"
+                        id="image_url"
+                        onChange={(e) => renderFile(e)}
+                        ref={upload}
+                      />
+                      <button
+                        className="bg-green-500 w-32 text-white rounded-md"
+                        type="button"
+                        onClick={() => {
+                          upload.current.click();
+                        }}
+                      >
+                        upload
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2"> Event Price</td>
+                    <td>
+                      <input
+                        type="number"
+                        placeholder="Event Price"
+                        className="border p-1 w-full md:w-96"
+                        min={50000}
+                        required
+                        id="price"
+                        value={formik.values.price}
+                        onChange={formik.handleChange}
+                      />
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td> Event Description</td>
-                  <td>
-                    <textarea
-                      type="text"
-                      placeholder="Description"
-                      className="border p-1 w-96"
-                      required
-                      value={formik.values.description}
-                      id="description"
-                      onChange={formik.handleChange}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Event Location</td>
-                  <td>
-                    <select
-                      className="border p-1 w-96"
-                      required
-                      value={formik.values.location}
-                      id="location"
-                      onChange={formik.handleChange}
-                    >
-                      <option value="">Select Location</option>
-                      <option value="Jakarta">Jakarta</option>
-                      <option value="Bandung">Bandung</option>
-                      <option value="BSD">BSD</option>
-                      <option value="Bali">Bali</option>
-                      <option value="Surabaya">Surabaya</option>
-                    </select>
-                  </td>
-                </tr>
+                  <tr>
+                    <td className="py-2"> Event Description</td>
+                    <td>
+                      <textarea
+                        type="text"
+                        placeholder="Description"
+                        className="border p-1 w-full md:w-96"
+                        required
+                        value={formik.values.description}
+                        id="description"
+                        onChange={formik.handleChange}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2">Event Location</td>
+                    <td>
+                      <select
+                        className="border p-1 w-full md:w-96"
+                        required
+                        value={formik.values.location}
+                        id="location"
+                        onChange={formik.handleChange}
+                      >
+                        <option value="">Select Location</option>
+                        <option value="Jakarta">Jakarta</option>
+                        <option value="Bandung">Bandung</option>
+                        <option value="BSD">BSD</option>
+                        <option value="Bali">Bali</option>
+                        <option value="Surabaya">Surabaya</option>
+                      </select>
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td> Event Date</td>
-                  <td>
-                    <input
-                      type="date"
-                      className="border p-1 w-96"
-                      required
-                      value={moment(formik.values.eventDate).format(
-                        "YYYY-MM-DD"
-                      )}
-                      id="eventDate"
-                      onChange={formik.handleChange}
-                    />
-                  </td>
-                </tr>
+                  <tr>
+                    <td className="py-2"> Event Date</td>
+                    <td>
+                      <input
+                        type="date"
+                        className="border p-1 w-full md:w-96"
+                        required
+                        value={moment(formik.values.eventDate).format(
+                          "YYYY-MM-DD"
+                        )}
+                        id="eventDate"
+                        onChange={formik.handleChange}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
               <div className="flex gap-2">
                 <button

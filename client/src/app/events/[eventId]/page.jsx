@@ -29,13 +29,13 @@ async function Page({ params }) {
         <div className="grid max-w-screen-2xl md:grid-cols-2 p-7 gap-3 w-full sm:grid-cols-1">
           <div className="m-auto">
             <img
-              className=" max-w-[600px]  max-h-[523px]"
+              className="max-w-full max-h-[523px] sm:max-w-[300px] sm:max-h-[300px]"
               src={process.env.API_URL + event.image_url}
               alt=""
             />
           </div>
-          <div className=" pt-10 flex flex-col gap-5  w-9/12">
-            <div className=" font-bold text-3xl">{event.eventName}</div>
+          <div className="pt-10 flex flex-col gap-5 w-full md:w-9/12">
+            <div className="font-bold text-3xl">{event.eventName}</div>
             <div className="my-2">
               <div>start from</div>
               <div className="font-bold text-3xl">
@@ -46,7 +46,11 @@ async function Page({ params }) {
               <div className="">{formatDate(event.eventDate)}</div>
             </div>
 
-            <form action="" className="flex gap-3" id="form">
+            <form
+              action=""
+              className="flex flex-col md:flex-row gap-3"
+              id="form"
+            >
               <input
                 className="h-[49px] border max-w-32 p-5 rounded-lg text-center"
                 type="number"
@@ -58,7 +62,7 @@ async function Page({ params }) {
 
               <Link
                 href={"/transaction/" + eventId}
-                className="h-[49px] border w-[130px] p-3 rounded-lg text-white bg-black hover:bg-white border-black hover:text-black text-center"
+                className="h-[49px] border w-full md:w-[130px] p-3 rounded-lg text-white bg-black hover:bg-white border-black hover:text-black text-center"
               >
                 Buy
               </Link>
@@ -69,11 +73,7 @@ async function Page({ params }) {
             <hr />
             <div className="font-semibold text-center">About This Event</div>
 
-            <div className=" text-justify text-sm">
-              {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              earum architecto nisi tempore, consectetur autem porro
-              exercitationem soluta, corrupti dicta corporis similique
-              repellendus quibusdam. */}
+            <div className="text-justify text-sm">
               {event.description ||
                 "We thoroughly check every purchase you make and applies our company's guarantee to the product's legitimacy. The guarantee is valid for 2 days after receiving the product from the delivery service. Should you have any concern about the product you purchase, kindly reach out to our Customer Service and Specialist on Monday - Saturday 10.00 - 21.00 (GMT+7 / WIB).\n"}
             </div>
